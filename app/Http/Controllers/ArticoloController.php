@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Articolo;
 use Illuminate\Http\Request;
+use App\Services\ArticoloService;
 use function PHPUnit\Framework\returnArgument;
 
 class ArticoloController extends Controller
 {
+    protected $articoloService;
+    public function __construct(ArticoloService $articoloService)
+    {
+        $this->articoloService = $articoloService;
+    }
+
     public function index()
     {
         $articoli = Articolo::all();
