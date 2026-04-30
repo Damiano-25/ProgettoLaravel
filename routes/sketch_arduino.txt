@@ -1,0 +1,209 @@
+#include <WiFiS3.h>
+#include <DHT.h>
+#include <LiquidCrystal.h>
+
+// -------------------------
+// WIFI
+// -------------------------
+char nome_rete[] = "TIM-51297409";
+char password[] = "INSERISCI_PASSWORD";
+
+const char server[] = "192.168.1.8";
+WiFiClient client;
+
+// -------------------------
+// LCD
+// -------------------------
+LiquidCrystal lcd(2, 3, 4, 5, 6, 7);
+
+// -------------------------
+// CONFIGURAZIONE PIN
+// -------------------------
+#define DHTPIN 8
+#define DHTTYPE DHT11
+
+const int PIN_SUOLO = A0;
+const int PIN_ACQUA = A1;
+const int PIN_RELE  = A2;
+
+DHT dht(DHTPIN, DHTTYPE);
+
+// stato relè
+bool releAcceso = false;
+bool statoRelePrecedente = false;
+
+// intervalli
+unsigned long ultimaLettura = 0;
+const unsigned long intervallo = 20000; // 20 secondi
+
+void setup() {
+  Serial.begin(9600);
+  delay(2000);
+
+  dht.begin();
+
+  pinMode(PIN_RELE, OUTPUT);
+
+  // relè attivo LOW
+  digitalWrite(PIN_RELE, HIGH);
+  releAcceso = false;
+  statoRelePrecedente = false;
+
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Sistema avviato");
+  lcd.setCursor(0, 1);
+  lcd.print("WiFi...");
+
+  Serial.println("Connessione al WiFi...");
+
+  while (WiFi.begin(nome_rete, password) != WL_CONNECTED) {
+    Serial.println("Connessione fallita, riprovo...");
+    delay(2000);
+  }
+
+  Serial.println("WiFi connesso!");
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("WiFi connesso");
+  delay(2000);
+
+  lcd.clear();
+
+  Serial.println("Sistema avviato");
+  Serial.println("----------------------------------------");
+}
+
+void loop() {
+
+  if (millis() - ultimaLettura >= intervallo) {
+    ultimaLettura = millis();
+
+    // lettura DHT11
+    float temperatura = dht.readTemperature();
+    float umiditaAria = dht.readHumidity();
+
+    // lettura sensori analogici
+    int valoreSuolo = analogRead(PIN_SUOLO);
+    int valoreAcqua = analogRead(PIN_ACQUA);
+
+    Serial.println("----------- LETTURA SENSORI -----------");
+
+    if (isnan(temperatura) || isnan(umiditaAria)) {
+      Serial.println("DHT11 -> errore lettura");
+      return;
+    }
+
+    Serial.print("Temperatura aria: ");
+    Serial.print(temperatura);
+    Serial.println(" °C");
+
+    Serial.print("Umidita aria: ");
+    Serial.print(umiditaAria);
+    Serial.println(" %");
+
+    Serial.print("Sensore suolo (A0): ");
+    Serial.println(valoreSuolo);
+
+    Serial.print("Sensore acqua (A1): ");
+    Serial.println(valoreAcqua);
+
+    // salvo stato precedente
+    statoRelePrecedente = releAcceso;
+
+    // logica relè
+    if (valoreSuolo > 700 && valoreAcqua > 300) {
+      digitalWrite(PIN_RELE, LOW);
+      releAcceso = true;
+    } else {
+      digitalWrite(PIN_RELE, HIGH);
+      releAcceso = false;
+    }
+
+    if (releAcceso != statoRelePrecedente) {
+      delay(300);
+      lcd.begin(16, 2);
+      lcd.clear();
+    }
+
+    Serial.print("Relè (A2): ");
+    Serial.println(releAcceso ? "ACCESO" : "SPENTO");
+
+    // -------------------------
+    // INVIO DATI AL SERVER PHP
+    // -------------------------
+    inviaDatiPHP(
+      temperatura,
+      umiditaAria,
+      valoreSuolo,
+      valoreAcqua,
+      releAcceso
+    );
+
+    // -------------------------
+    // DISPLAY LCD
+    // -------------------------
+    lcd.setCursor(0, 0);
+    lcd.print("                ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+
+    lcd.setCursor(0, 0);
+    lcd.print("T:");
+    lcd.print((int)temperatura);
+    lcd.print("C H:");
+    lcd.print((int)umiditaAria);
+    lcd.print("%");
+
+    lcd.setCursor(0, 1);
+    lcd.print("S:");
+    lcd.print(valoreSuolo);
+    lcd.print(" A:");
+    lcd.print(valoreAcqua);
+    lcd.print(" ");
+    lcd.print(releAcceso ? "ON" : "OFF");
+
+    Serial.println("----------------------------------------");
+    Serial.println();
+  }
+}
+
+void inviaDatiPHP(float temperatura, float umiditaAria, int suolo, int acqua, bool rele) {
+
+  if (client.connect(server, 8000)) { 
+
+    String url = "/api/salva-dati-wifi?";
+    url += "temperatura=" + String(temperatura, 1);
+    url += "&umidita_aria=" + String(umiditaAria, 1);
+    url += "&suolo=" + String(suolo);
+    url += "&acqua=" + String(acqua);
+    url += "&rele=" + String(rele ? 1 : 0);
+
+    Serial.println("Invio richiesta:");
+    Serial.println(url);
+
+    client.print("GET " + url + " HTTP/1.1\r\n");
+    client.print("Host: ");
+    client.print(server);
+    client.print("\r\n");
+    client.print("Connection: close\r\n\r\n");
+
+    unsigned long timeout = millis();
+
+    while (client.connected() && millis() - timeout < 5000) {
+      while (client.available()) {
+        char c = client.read();
+        Serial.write(c);
+        timeout = millis();
+      }
+    }
+
+    client.stop();
+    Serial.println();
+    Serial.println("Dati inviati al server");
+  } else {
+    Serial.println("Connessione al server fallita!");
+  }
+}
