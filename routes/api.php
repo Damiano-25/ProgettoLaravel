@@ -1,28 +1,32 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\DatiApiController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-Route::get('/salva-dati-wifi', function (Request $request) {
 
-    if (
-        !$request->has('temperatura') ||
-        !$request->has('umidita_aria') ||
-        !$request->has('suolo') ||
-        !$request->has('acqua') ||
-        !$request->has('rele')
-    ) {
-        return response('parametri mancanti', 400);
+//route api rest interna dati arduino
+Route::get('/salva-dati-wifi', [DatiApiController::class, 'store']);
+
+//route api rest esterna meteo
+//coordinate usare:
+Route::get('/meteo-esterno', function (Request $request) {
+
+    $citta = $request->query('citta');
+
+    if (!$citta) {
+        return response()->json([
+            'errore' => 'città mancante'
+        ], 400);
     }
 
-    DB::table('dati')->insert([
-        'temperatura' => floatval($request->temperatura),
-        'umidita_aria' => floatval($request->umidita_aria),
-        'suolo' => intval($request->suolo),
-        'acqua' => intval($request->acqua),
-        'rele' => intval($request->rele),
-        'data_rilevazione' => now()
+    $meteo = Http::get('https://api.openweathermap.org/data/2.5/weather', [
+        'q' => $citta . ',IT',
+        'appid' => env('OPENWEATHER_API_KEY'),
+        'units' => 'metric',
+        'lang' => 'it'
     ]);
 
-    return response('OK', 200);
+    return $meteo->json();
 });

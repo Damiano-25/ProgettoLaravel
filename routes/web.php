@@ -41,3 +41,7 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('orti.register');
 })->name('register');
+
+Route::get('/meteo', function () {
+    return view('orti.meteo');
+})->name('meteo');

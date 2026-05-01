@@ -96,22 +96,29 @@
         requestAnimationFrame(update);
     }
 
-    function initCounters() {
-        const counters = document.querySelectorAll('.stat-value');
-        counters.forEach(counter => {
-            const text = counter.textContent;
-            const value = parseInt(text.replace(/[^0-9]/g, ''));
-            
-            if (text.includes('$')) {
-                counter.dataset.prefix = '$';
-            }
-            if (text.includes('%')) {
-                counter.dataset.suffix = '%';
-            }
-            
-            animateCounter(counter, value);
-        });
-    }
+function initCounters() {
+    const counters = document.querySelectorAll('.stat-value');
+
+    counters.forEach(counter => {
+        const text = counter.textContent;
+        const value = parseInt(text.replace(/[^0-9]/g, ''));
+
+        // se non è un numero, non animare
+        if (isNaN(value)) {
+            return;
+        }
+
+        if (text.includes('$')) {
+            counter.dataset.prefix = '$';
+        }
+
+        if (text.includes('%')) {
+            counter.dataset.suffix = '%';
+        }
+
+        animateCounter(counter, value);
+    });
+}
 
     // ============================================
     // Mobile Menu Toggle
