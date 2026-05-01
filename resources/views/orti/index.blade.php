@@ -55,7 +55,8 @@ https://templatemo.com/tm-607-glass-admin
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('meteo') }}" class="nav-link active">
+                                <a href="{{ route('meteo') }}"
+                                    class="nav-link {{ request()->routeIs('meteo') ? 'active' : '' }}">
                                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
                                         <path
@@ -125,8 +126,10 @@ https://templatemo.com/tm-607-glass-admin
                 <div class="user-profile">
                     <div class="user-avatar">TM</div>
                     <div class="user-info">
-                        <div class="user-name">TemplateMo</div>
-                        <div class="user-role">Administrator</div>
+                        <div class="user-name">
+                            {{ session('utente_nome') }}
+                        </div>
+                        <div class="user-role">Utente</div>
                     </div>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2">
@@ -638,12 +641,6 @@ https://templatemo.com/tm-607-glass-admin
             <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
     </button>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <p>Copyright © 2026 Your Company. Designed by <a href="https://templatemo.com" target="_blank"
-                rel="nofollow">TemplateMo</a></p>
-    </footer>
 
     <script src="{{ asset('template/templatemo-glass-admin-script.js') }}"></script>
     <!-- TemplateMo 607 Glass Admin -->

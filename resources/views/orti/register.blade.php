@@ -56,27 +56,35 @@ https://templatemo.com/tm-607-glass-admin
                     <p class="login-subtitle">Start your journey with GlassDash</p>
                 </div>
 
-                <form data-validate data-redirect="{{ route('index') }}">
+                @if ($errors->any())
+                    <div style="color:red; margin-bottom:15px;">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+                <form method="POST" action="{{ route('register.post') }}">
+                    @csrf
+
                     <div class="form-group">
                         <label class="form-label" for="fullname">Full Name</label>
-                        <input type="text" id="fullname" class="form-input" placeholder="Enter your full name"
-                            required>
+                        <input type="text" name="name" id="fullname" class="form-input"
+                            placeholder="Enter your full name" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="email">Email Address</label>
-                        <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                        <input type="email" name="email" id="email" class="form-input"
+                            placeholder="Enter your email" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="password">Password</label>
-                        <input type="password" id="password" class="form-input" placeholder="Create a password"
-                            required>
+                        <input type="password" name="password" id="password" class="form-input"
+                            placeholder="Create a password" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" class="form-input"
+                        <input type="password" name="password_confirmation" id="confirm-password" class="form-input"
                             placeholder="Confirm your password" required>
                     </div>
 
@@ -89,11 +97,6 @@ https://templatemo.com/tm-607-glass-admin
 
                     <button type="submit" class="btn btn-primary">
                         Create Account
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="12 5 19 12 12 19" />
-                        </svg>
                     </button>
                 </form>
 
@@ -133,7 +136,7 @@ https://templatemo.com/tm-607-glass-admin
                 </div>
 
                 <p class="login-footer">
-                    Already have an account? <a href="login.html">Sign In</a>
+                    Already have an account? <a href="{{ route('login') }}">Sign In</a>
                 </p>
             </div>
         </div>

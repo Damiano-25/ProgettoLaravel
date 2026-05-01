@@ -61,3 +61,30 @@ INSERT INTO ordini_articoli (id_ordine, id_articolo, quantita) VALUES
 (3, 4, 2),
 (4, 5, 1),
 (5, 2, 3);
+
+----------------------------------------------------------------------
+
+CREATE TABLE tipologie_pianta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    livello_acqua ENUM('LOW','MEDIUM','MEDIUM-HIGH','HIGH') NOT NULL,
+
+    soglia_suolo INT NOT NULL,                -- quando irrigare (valore sensore)
+    durata_irrigazione INT NOT NULL,          -- secondi
+    intervallo_irrigazione INT NOT NULL,      -- secondi tra due irrigazioni
+
+    attiva BOOLEAN DEFAULT 0,                 -- quale è selezionata
+
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+);
+INSERT INTO categorie_piante
+(nome, livello_acqua, soglia_suolo, durata_irrigazione, intervallo_irrigazione, attiva)
+VALUES
+('Piante grasse', 'LOW', 850, 3, 1296000, 0),
+('Piante aromatiche', 'MEDIUM', 700, 5, 604800, 0),
+('Piante da fiore', 'MEDIUM-HIGH', 650, 5, 172800, 0),
+('Piante ortaggi', 'HIGH', 600, 6, 43200, 1),
+('Piante radici', 'MEDIUM-HIGH', 650, 6, 302400, 0),
+('Piante a foglia', 'HIGH', 600, 9, 86400, 0),
+('Piante ornamentali da interno', 'MEDIUM', 720, 5, 1036800, 0);

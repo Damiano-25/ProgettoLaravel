@@ -8,6 +8,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrtoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Utente;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,3 +48,60 @@ Route::get('/register', function () {
 Route::get('/meteo', function () {
     return view('orti.meteo');
 })->name('meteo');
+
+//legge categorie piante dal db e le manda a index.blade
+Route::get('/categorie-piante', function () {
+    $categorie = DB::table('categorie_piante')->get();
+    return view('orti.categoria_pianta', compact('categorie'));
+});
+
+//disattiva tutte categorie e attiva quella scelta
+Route::post('/categorie-piante/attiva', function (Request $request) {
+    DB::table('categorie_piante')->update(['attiva' => 0]);
+
+    DB::table('categorie_piante')
+        ->where('id', $request->categoria_id)
+        ->update(['attiva' => 1]);
+
+    return redirect('/categorie-piante');
+});
+
+//route login
+Route::post('/login', function (Request $request) {
+    $dati = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    $utente = Utente::where('email', $dati['email'])->first();
+
+    if (!$utente || !Hash::check($dati['password'], $utente->password)) {
+        return back()->withErrors([
+            'email' => 'Email o password non corretti.',
+        ]);
+    }
+
+    session([
+        'utente_id' => $utente->id,
+        'utente_nome' => $utente->name,
+    ]);
+
+    return redirect()->route('index');
+})->name('login.post');
+
+//route registrazione
+Route::post('/register', function (Request $request) {
+    $dati = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:utenti,email',
+        'password' => 'required|min:6|confirmed', //confirmed
+    ]);
+
+    Utente::create([
+        'name' => $dati['name'],
+        'email' => $dati['email'],
+        'password' => Hash::make($dati['password']), //password hashata
+    ]);
+
+    return redirect()->route('login');
+})->name('register.post');

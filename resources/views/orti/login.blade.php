@@ -56,35 +56,45 @@ https://templatemo.com/tm-607-glass-admin
                     <p class="login-subtitle">Sign in to continue to GlassDash</p>
                 </div>
 
-                <form data-validate data-redirect="{{ route('index') }}">
-                    <div class="form-group">
-                        <label class="form-label" for="email">Email Address</label>
-                        <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
-                    </div>
+<form method="POST" action="{{ route('login.post') }}">
+    @csrf
 
-                    <div class="form-group">
-                        <label class="form-label" for="password">Password</label>
-                        <input type="password" id="password" class="form-input" placeholder="Enter your password"
-                            required>
-                    </div>
+    <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input 
+            type="email" 
+            name="email"
+            id="email" 
+            class="form-input" 
+            placeholder="Enter your email" 
+            required
+        >
+    </div>
 
-                    <div class="form-row">
-                        <label class="checkbox-label">
-                            <input type="checkbox" checked>
-                            Remember me
-                        </label>
-                        <a href="#" class="forgot-link">Forgot Password?</a>
-                    </div>
+    <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input 
+            type="password" 
+            name="password"
+            id="password" 
+            class="form-input" 
+            placeholder="Enter your password"
+            required
+        >
+    </div>
 
-                    <button type="submit" class="btn btn-primary">
-                        Sign In
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="12 5 19 12 12 19" />
-                        </svg>
-                    </button>
-                </form>
+    <div class="form-row">
+        <label class="checkbox-label">
+            <input type="checkbox" name="remember">
+            Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot Password?</a>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Sign In
+    </button>
+</form>
 
                 <div class="divider">
                     <span>or continue with</span>
