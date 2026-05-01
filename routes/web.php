@@ -17,11 +17,10 @@ Route::resource('orti', OrtoController::class);
 Route::resource('articoli', ArticoloController::class);
 Route::resource('clienti', ClienteController::class);
 Route::resource('ordini', OrdineController::class);
-//Route::get('/dashboard', [OrtoController::class, 'index']);
-
-Route::get('/index', function () {
-    return view('orti.index');
-})->name('index');
+Route::get('/index', [OrtoController::class, 'index'])->name('index');
+//Route::get('/index', function () {
+   // return view('orti.index');
+//})->name('index');
 
 Route::get('/analytics', function () {
     return view('orti.analytics');

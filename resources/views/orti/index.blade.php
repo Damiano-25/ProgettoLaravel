@@ -171,7 +171,7 @@ https://templatemo.com/tm-607-glass-admin
                     <div class="stat-card-inner">
                         <div class="stat-info">
                             <h3>Umidità</h3>
-                            <div class="stat-value">65%</div>
+                            <div class="stat-value"> {{ $dati->UMIDITA_RADICI_PERC }}%</div>
                             <span class="stat-change positive">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
@@ -193,7 +193,7 @@ https://templatemo.com/tm-607-glass-admin
                     <div class="stat-card-inner">
                         <div class="stat-info">
                             <h3>Esposizione Solare</h3>
-                            <div class="stat-value">7</div>
+                            <div class="stat-value">{{ $dati->ESPOSIZIONE_SOLARE_EFFETTIVA }}</div>
                             <span class="stat-change positive">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
@@ -217,7 +217,7 @@ https://templatemo.com/tm-607-glass-admin
                     <div class="stat-card-inner">
                         <div class="stat-info">
                             <h3>Data</h3>
-                            <div class="stat-value">2023-10-01</div>
+                            {{ $dati->DATA_RECORD }}
                             <span class="stat-change negative">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">

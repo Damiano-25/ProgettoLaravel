@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orto;
+use App\Models\RecordPiante;
 use Illuminate\Http\Request;
 use App\Services\ArticoloService;
 use function PHPUnit\Framework\returnArgument;
@@ -18,13 +19,14 @@ class OrtoController extends Controller
     public function index()
     {
         $orti = Orto::all();
-        return view('orti.dashboard', compact('orti'));
+        $dati = RecordPiante::where('id', 1)->first();
+        return view('orti.index', compact('orti', 'dati'));
     }
-    //public function show(Orto $orto)
-    //{
-    //    $orto = Orto::all();
-    //    return view('orti.show', compact('orto'));
-    //}
+    public function show(Orto $orto)
+    {
+        $orto = Orto::all();
+        return view('orti.show', compact('orto'));
+    }
 
     //creo metodo per mostrare form per inserire nuovo sito
     public function create()
