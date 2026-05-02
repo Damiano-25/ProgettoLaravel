@@ -89,7 +89,7 @@ Route::post('/login', function (Request $request) {
         'utente_nome' => $utente->nome,
     ]);
 
-    return redirect()->route('index');
+    return redirect()->route('index', ['id' => 1]);
 })->name('login.post');
 
 //route registrazione
