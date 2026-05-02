@@ -20,7 +20,7 @@ Route::resource('orti', OrtoController::class);
 Route::resource('articoli', ArticoloController::class);
 Route::resource('clienti', ClienteController::class);
 Route::resource('ordini', OrdineController::class);
-Route::get('/index', [OrtoController::class, 'index'])->name('index');
+Route::get('/index/{id}', [OrtoController::class, 'index'])->name('index');
 
 Route::get('/users', [OrtoController::class, 'users'])->name('users');
 //Route::get('/index', function () {

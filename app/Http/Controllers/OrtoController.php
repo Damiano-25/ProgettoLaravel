@@ -18,11 +18,11 @@ class OrtoController extends Controller
         $this->articoloService = $articoloService;
     }
 
-    public function index()
+    public function index($id)
     {
         $orti = Orto::all();
 
-        $dati = RecordPiante::where('id', 1)->first();
+        /*$dati = RecordPiante::where('id', 1)->first();
 
         $nomePianta = \App\Models\Piante::join(
             'tipologie_pianta',
@@ -31,6 +31,18 @@ class OrtoController extends Controller
             'tipologie_pianta.ID_TIPOLOGIA'
         )
         ->where('piante.ID_PIANTA', $dati->ID_PIANTA)
+        ->value('tipologie_pianta.NOME_PIANTA');*/
+        $dati = RecordPiante::where('ID_PIANTA', $id)
+        ->orderByDesc('id') // prende il record più grande
+        ->first();
+
+        $nomePianta = Piante::join(
+            'tipologie_pianta',
+            'piante.ID_TIPOLOGIA',
+            '=',
+            'tipologie_pianta.ID_TIPOLOGIA'
+        )
+        ->where('piante.ID_PIANTA', $id)
         ->value('tipologie_pianta.NOME_PIANTA');
         
         return view('orti.index', compact('orti', 'dati', 'nomePianta'));
