@@ -33,105 +33,112 @@ https://templatemo.com/tm-607-glass-admin
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">G</div>
-                <span class="logo-text">GlassDash</span>
+                <span class="logo-text">OrtoWare</span>
             </div>
 
             <ul class="nav-menu">
                 <li class="nav-section">
                     <span class="nav-section-title">Main Menu</span>
                     <ul>
-                        <ul>
-                            <li class="nav-item">
-                                <a href="{{ route('index') }}" class="nav-link">
-                                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <rect x="3" y="3" width="7" height="7" rx="1" />
-                                        <rect x="14" y="3" width="7" height="7" rx="1" />
-                                        <rect x="3" y="14" width="7" height="7" rx="1" />
-                                        <rect x="14" y="14" width="7" height="7" rx="1" />
-                                    </svg>
-                                    Pianta
-                                </a>
-                            </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('meteo') }}" class="nav-link active">
-                                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path
-                                            d="M17.5 19H7a5 5 0 1 1 1.2-9.85A6 6 0 0 1 19 12.5A3.5 3.5 0 0 1 17.5 19z" />
-                                        <path d="M13 14l-2 4h3l-2 4" />
-                                    </svg>
-                                    Meteo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('analytics') }}" class="nav-link">
-                                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                                        <path d="M2 17l10 5 10-5" />
-                                        <path d="M2 12l10 5 10-5" />
-                                    </svg>
-                                    Analytics
-                                    <span class="nav-badge">New</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('users') }}" class="nav-link">
-                                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                        <circle cx="9" cy="7" r="4" />
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                    </svg>
-                                    Users
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('settings') }}" class="nav-link">
-                                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <circle cx="12" cy="12" r="3" />
-                                        <path
-                                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                                    </svg>
-                                    Settings
-                                </a>
-                            </li>
-                        </ul>
-                </li>
-
-                <li class="nav-section">
-                    <span class="nav-section-title">Account</span>
-                    <ul>
+                        <!-- PIANTA -->
                         <li class="nav-item">
-                            <a href="{{ route('login') }}" class="nav-link">
+                            <a href="{{ route('index', ['id' => 1]) }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
-                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                    <polyline points="16 17 21 12 16 7" />
-                                    <line x1="21" y1="12" x2="9" y2="12" />
+                                    <!-- foglia -->
+                                    <path d="M5 21c10-2 14-10 14-16C13 5 7 9 5 21z" />
+                                    <path d="M5 21c0-7 7-10 14-10" />
                                 </svg>
-                                Logout
+                                Dati Pianta
                             </a>
                         </li>
-                    </ul>
-                </li>
-            </ul>
 
-            <div class="sidebar-footer">
-                <div class="user-profile">
-                    <div class="user-avatar">TM</div>
-                    <div class="user-info">
-                        <div class="user-name">
-                            {{ session('utente_nome') }}
+                        <!-- METEO -->
+                        <li class="nav-item">
+                            <a href="{{ route('meteo') }}"
+                                class="nav-link {{ request()->routeIs('meteo') ? 'active' : '' }}">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <!-- nuvola + sole -->
+                                    <circle cx="18" cy="6" r="3" />
+                                    <path d="M3 15a4 4 0 0 1 4-4 5 5 0 0 1 9-1 3 3 0 0 1 1 6H5a2 2 0 0 1-2-1z" />
+                                </svg>
+                                Meteo
+                            </a>
+                        </li>
+
+                        <!-- ISTRUZIONI -->
+                        <li class="nav-item">
+                            <a href="{{ route('analytics') }}" class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <!-- libro / guida -->
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                                    <path d="M6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2z" />
+                                </svg>
+                                Istruzioni
+                            </a>
+                        </li>
+
+                        <!-- ORTO -->
+                        <li class="nav-item">
+                            <a href="{{ route('users') }}" class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <!-- piantine multiple -->
+                                    <path d="M12 20v-6" />
+                                    <path d="M8 20v-4" />
+                                    <path d="M16 20v-4" />
+                                    <path d="M12 14c4-1 6-4 6-8-4 0-6 3-6 8z" />
+                                    <path d="M12 14c-4-1-6-4-6-8 4 0 6 3 6 8z" />
+                                </svg>
+                                Il Tuo Orto
+                            </a>
+                        </li>
+
+                        <!-- SETTINGS -->
+                        <li class="nav-item">
+                            <a href="{{ route('settings') }}" class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                                </svg>
+                                Settings
+                            </a>
+                        </li>
+
+                        <li class="nav-section">
+                            <span class="nav-section-title">Account</span>
+                            <ul>
+                                <li class="nav-item">
+                                    <a href="{{ route('login') }}" class="nav-link">
+                                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                            <polyline points="16 17 21 12 16 7" />
+                                            <line x1="21" y1="12" x2="9" y2="12" />
+                                        </svg>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="sidebar-footer">
+                        <div class="user-profile">
+                            <div class="user-avatar">{{ strtoupper(substr(session('utente_nome'), 0, 2)) }}</div>
+                            <div class="user-info">
+                                <div class="user-name">
+                                    {{ session('utente_nome') }}
+                                </div>
+                                <div class="user-role">Utente</div>
+                            </div>
                         </div>
-                        <div class="user-role">Utente</div>
                     </div>
-                </div>
-            </div>
         </aside>
 
         <!-- Main Content -->
@@ -196,48 +203,20 @@ https://templatemo.com/tm-607-glass-admin
                                 Profile
                             </a>
                         </li>
+
                         <li class="settings-nav-item">
-                            <a href="{{ route('settings') }}#security" class="settings-nav-link"
-                                data-tab="security">
+                            <a href="{{ route('settings') }}#orto" class="settings-nav-link" data-tab="orto">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" />
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    <path d="M12 20v-8" />
+                                    <path d="M8 20v-5" />
+                                    <path d="M16 20v-5" />
+                                    <path d="M12 12c4-1 6-4 6-8-4 0-6 3-6 8z" />
+                                    <path d="M12 12c-4-1-6-4-6-8 4 0 6 3 6 8z" />
                                 </svg>
-                                Security
+                                Orto
                             </a>
                         </li>
-                        <li class="settings-nav-item">
-                            <a href="{{ route('settings') }}#notifications" class="settings-nav-link"
-                                data-tab="notifications">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                                </svg>
-                                Notifications
-                            </a>
-                        </li>
-                        <li class="settings-nav-item">
-                            <a href="{{ route('settings') }}#appearance" class="settings-nav-link"
-                                data-tab="appearance">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="4" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="M4.93 4.93l1.41 1.41" />
-                                    <path d="M17.66 17.66l1.41 1.41" />
-                                </svg>
-                                Appearance
-                            </a>
-                        </li>
-                        <li class="settings-nav-item">
-                            <a href="{{ route('settings') }}#billing" class="settings-nav-link" data-tab="billing">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="1" y="4" width="22" height="16" rx="2" />
-                                    <line x1="1" y1="10" x2="23" y2="10" />
-                                </svg>
-                                Billing
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
 
@@ -247,7 +226,7 @@ https://templatemo.com/tm-607-glass-admin
                     <div class="settings-tab-content active" id="tab-profile">
                         <div class="profile-header">
                             <div class="profile-avatar-large">
-                                TM
+                                {{ strtoupper(substr(session('utente_nome'), 0, 2)) }}
                                 <div class="profile-avatar-edit">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -256,8 +235,8 @@ https://templatemo.com/tm-607-glass-admin
                                 </div>
                             </div>
                             <div class="profile-info">
-                                <h2>TemplateMo</h2>
-                                <p>admin@templatemo.com • Administrator</p>
+                                <h2>{{ session('utente_nome') }}</h2>
+                                <p>Utente loggato</p>
                             </div>
                         </div>
 
@@ -312,12 +291,17 @@ https://templatemo.com/tm-607-glass-admin
                                 </div>
 
                                 <div class="btn-group">
-                                    <button type="submit" class="btn btn-primary" style="width: auto;">
-                                        Salva modifiche
+                                    <button type="submit" class="btn btn-primary" style="width:auto;">
+                                        Salva profilo
                                     </button>
                                 </div>
                             </form>
                         </div>
+
+
+                        
+
+
 
                         <!-- Appearance Tab -->
                         <div class="settings-tab-content" id="tab-appearance">
@@ -400,110 +384,49 @@ https://templatemo.com/tm-607-glass-admin
                             </div>
                         </div>
 
-                        <!-- Billing Tab -->
-                        <div class="settings-tab-content" id="tab-billing">
-                            <div class="settings-section">
-                                <h3 class="settings-section-title">Current Plan</h3>
-                                <div class="billing-plan-card"
-                                    style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(212, 165, 116, 0.15)); padding: 24px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--glass-border);">
-                                    <div
-                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                                        <div>
-                                            <h4 style="font-size: 20px; font-weight: 600; margin-bottom: 4px;">Pro Plan
-                                            </h4>
-                                            <p style="color: var(--text-muted); font-size: 14px;">Billed monthly</p>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <span
-                                                style="font-family: 'Space Mono', monospace; font-size: 32px; font-weight: 700;">$29</span>
-                                            <span style="color: var(--text-muted);">/month</span>
-                                        </div>
-                                    </div>
-                                    <div style="display: flex; gap: 12px;">
-                                        <button class="btn btn-primary"
-                                            style="width: auto; padding: 10px 20px;">Upgrade
-                                            Plan</button>
-                                        <button class="btn btn-secondary"
-                                            style="width: auto; padding: 10px 20px;">Cancel
-                                            Subscription</button>
-                                    </div>
-                                </div>
-                            </div>
+                        
+                    </div> 
 
-                            <div class="settings-section">
-                                <h3 class="settings-section-title">Payment Method</h3>
-                                <div class="settings-row">
-                                    <div class="settings-label"
-                                        style="display: flex; align-items: center; gap: 16px;">
-                                        <div
-                                            style="width: 48px; height: 32px; background: linear-gradient(135deg, #1a1f71, #00579f); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-                                            <span style="color: white; font-size: 10px; font-weight: bold;">VISA</span>
-                                        </div>
-                                        <div>
-                                            <span class="settings-label-title">Visa ending in 4242</span>
-                                            <span class="settings-label-desc">Expires 12/2026</span>
-                                        </div>
-                                    </div>
-                                    <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                </div>
-                                <div style="margin-top: 16px;">
-                                    <button class="btn btn-secondary" style="width: auto; padding: 10px 20px;">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                        Add Payment Method
-                                    </button>
-                                </div>
-                            </div>
+        <!-- ORTO TAB -->
+        <div class="settings-tab-content" id="tab-orto">
+            <div class="profile-header">
+                <div class="profile-avatar-large">OW</div>
 
-                            <div class="settings-section">
-                                <h3 class="settings-section-title">Billing History</h3>
-                                <div class="table-wrapper" style="margin: 0;">
-                                    <table class="data-table" style="min-width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Description</th>
-                                                <th>Amount</th>
-                                                <th>Status</th>
-                                                <th>Invoice</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Jan 1, 2025</td>
-                                                <td>Pro Plan - Monthly</td>
-                                                <td><span class="table-amount">$29.00</span></td>
-                                                <td><span class="status-badge completed">Paid</span></td>
-                                                <td><a href="#"
-                                                        style="color: var(--emerald-light);">Download</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dec 1, 2024</td>
-                                                <td>Pro Plan - Monthly</td>
-                                                <td><span class="table-amount">$29.00</span></td>
-                                                <td><span class="status-badge completed">Paid</span></td>
-                                                <td><a href="#"
-                                                        style="color: var(--emerald-light);">Download</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nov 1, 2024</td>
-                                                <td>Pro Plan - Monthly</td>
-                                                <td><span class="table-amount">$29.00</span></td>
-                                                <td><span class="status-badge completed">Paid</span></td>
-                                                <td><a href="#"
-                                                        style="color: var(--emerald-light);">Download</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                <div class="profile-info">
+                    <h2>{{ $orto->nome ?? 'Orto principale' }}</h2>
+                    <p>{{ $orto->provincia ?? 'Provincia non specificata' }}</p>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3 class="settings-section-title">Informazioni orto</h3>
+
+                <form method="POST" action="{{ route('settings.orto.update') }}">
+                    @csrf
+
+                    <div class="form-grid">
+                        <div class="form-group-settings">
+                            <label>Nome orto</label>
+                            <input type="text" name="nome_orto" value="{{ $orto->nome ?? '' }}" required>
                         </div>
+
+                        <div class="form-group-settings">
+                            <label>Provincia</label>
+                            <input type="text" name="provincia" value="{{ $orto->provincia ?? '' }}">
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary" style="width:auto;">
+                            Salva orto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div> <!-- fine glass-card -->
+</div> <!-- fine settings-grid -->
                     </div>
                 </div>
         </main>

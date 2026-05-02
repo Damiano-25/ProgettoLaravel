@@ -51,46 +51,40 @@ https://templatemo.com/tm-607-glass-admin
         <div class="login-container">
             <div class="login-card">
                 <div class="login-header">
-                    <div class="login-logo">G</div>
                     <h1 class="login-title">Welcome Back</h1>
                     <p class="login-subtitle">Sign in to continue to OrtoWare</p>
                 </div>
 
-<form method="POST" action="{{ route('login.post') }}">
-    @csrf
+                @if ($errors->any())
+                    <div
+                        style="margin-bottom: 15px; padding: 10px; background: rgba(255,0,0,0.2); color: #ffcccc; border-radius: 8px;">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
 
-    <div class="form-group">
-        <label class="form-label" for="email">Email Address</label>
-        <input 
-            type="email" 
-            name="email"
-            id="email" 
-            class="form-input" 
-            placeholder="Enter your email" 
-            required
-        >
-    </div>
+                <form method="POST" action="{{ route('login.post') }}">
+                    @csrf
 
-    <div class="form-group">
-        <label class="form-label" for="password">Password</label>
-        <input 
-            type="password" 
-            name="password"
-            id="password" 
-            class="form-input" 
-            placeholder="Enter your password"
-            required
-        >
-    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" name="email" id="email" class="form-input"
+                            placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-input"
+                            placeholder="Enter your password" required>
+                    </div>
 
 
 
-    <button type="submit" class="btn btn-primary">
-        Sign In
-    </button>
-</form>
+                    <button type="submit" class="btn btn-primary">
+                        Sign In
+                    </button>
+                </form>
 
-                
+
 
                 <p class="login-footer">
                     Don't have an account? <a href="{{ route('register') }}">Create Account</a>

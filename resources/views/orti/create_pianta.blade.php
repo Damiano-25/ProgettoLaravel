@@ -4,39 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlassAdmin Dashboard - 3D Glassmorphism Dashboard</title>
-    <meta name="description" content="3D Glassmorphism Dashboard Template by TemplateMo">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <title>Aggiungi Pianta - OrtoWare</title>
     <link rel="stylesheet" href="{{ asset('template/templatemo-glass-admin-style.css') }}">
-    <!--
-
-TemplateMo 607 Glass Admin
-
-https://templatemo.com/tm-607-glass-admin
-
--->
 </head>
 
 <body>
-    <!-- Animated Background -->
     <div class="background"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
     <div class="dashboard">
-        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">OW</div>
                 <span class="logo-text">OrtoWare</span>
             </div>
 
-                        <ul class="nav-menu">
+            <ul class="nav-menu">
                 <li class="nav-section">
                     <span class="nav-section-title">Main Menu</span>
                     <ul>
@@ -128,37 +113,29 @@ https://templatemo.com/tm-607-glass-admin
                 </li>
             </ul>
 
-                    <div class="sidebar-footer">
-                        <div class="user-profile">
-                            <div class="user-avatar">{{ strtoupper(substr(session('utente_nome'), 0, 2)) }}</div>
-                            <div class="user-info">
-                                <div class="user-name">
-                                    {{ session('utente_nome') }}
-                                </div>
-                                <div class="user-role">Utente</div>
-                            </div>
-                        </div>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">{{ strtoupper(substr(session('utente_nome'), 0, 2)) }}</div>
+                    <div class="user-info">
+                        <div class="user-name">{{ session('utente_nome') }}</div>
+                        <div class="user-role">Utente</div>
                     </div>
+                </div>
+            </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Top Navbar -->
             <nav class="navbar">
-                <h1 class="page-title">{{ $nomePianta ?? 'Nessuna pianta' }}</h1>
-                <div class="navbar-right">
-                    <div class="search-box">
-                    </div>
+                <h1 class="page-title">Aggiungi pianta</h1>
 
-                    @if (session('success'))
-                        <div
-                            style="margin: 20px 0; padding: 12px; background: #16a34a; color: white; border-radius: 10px;">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                <div class="navbar-right">
+                    <a href="{{ route('users') }}" class="card-btn">
+                        Torna alle piante
+                    </a>
 
                     <button class="nav-btn" id="theme-toggle" title="Toggle Light/Dark Mode">
-                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <circle cx="12" cy="12" r="4" />
                             <path d="M12 2v2" />
                             <path d="M12 20v2" />
@@ -169,116 +146,82 @@ https://templatemo.com/tm-607-glass-admin
                             <path d="M6.34 17.66l-1.41 1.41" />
                             <path d="M19.07 4.93l-1.41 1.41" />
                         </svg>
-                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            style="display: none;">
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" style="display: none;">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                         </svg>
                     </button>
                 </div>
             </nav>
 
-            <!-- Stats Cards -->
-            <section class="stats-grid">
+            <section class="settings-grid" style="display:block;">
+                <div class="glass-card" style="max-width: 850px; margin: 0 auto;">
+                    <div class="settings-section">
+                        <h3 class="settings-section-title">Dati nuova pianta</h3>
 
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Temperatura</h3>
-                            <div class="stat-value">{{ $dati->temperatura ?? 'Nessun dato' }} °C</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Umidità aria</h3>
-                            <div class="stat-value">{{ $dati->umidita_aria ?? 'Nessun dato' }} %</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Umidità suolo</h3>
-                            <div class="stat-value">{{ $dati->suolo ?? 'Nessun dato' }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Acqua</h3>
-                            <div class="stat-value">{{ $dati->acqua ?? 'Nessun dato' }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Relè</h3>
-                            <div class="stat-value">
-                                {{ isset($dati->rele) ? ($dati->rele ? 'ACCESO' : 'SPENTO') : 'Nessun dato' }}
+                        @if ($errors->any())
+                            <div style="margin-bottom: 15px; padding: 12px; background: #dc2626; color: white; border-radius: 10px;">
+                                {{ $errors->first() }}
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        @endif
 
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Programma irrigazione</h3>
+                        <form method="POST" action="{{ route('piante.store') }}">
+                            @csrf
 
-                            @if ($pianta && $pianta->attiva)
-                                <!-- Stato attivo -->
-                                <button type="button" class="card-btn btn-irrigazione attivo" disabled>
-                                    Programma già attivo
+                            <div class="form-grid">
+                                <div class="form-group-settings">
+                                    <label>Nome pianta</label>
+                                    <input type="text" name="nome" placeholder="Es. Pomodori" required>
+                                </div>
+
+                                <div class="form-group-settings">
+                                    <label>Orto</label>
+                                    <select name="orto_id" class="settings-select" required>
+                                        @foreach($orti as $orto)
+                                            <option value="{{ $orto->id }}">
+                                                {{ $orto->nome }} - {{ $orto->provincia }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group-settings full-width">
+                                    <label>Categoria pianta</label>
+                                    <select name="categoria_id" class="settings-select" required>
+                                        @foreach($categorie as $categoria)
+                                            <option value="{{ $categoria->id }}">
+                                                {{ $categoria->nome }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary" style="width:auto;">
+                                    Salva pianta
                                 </button>
 
-                                <!-- Bottone rimuovi -->
-                                <form method="POST" action="{{ route('piante.disattiva', ['id' => $pianta->id]) }}">
-                                    @csrf
-
-                                    <button type="submit" class="card-btn btn-irrigazione rimuovi">
-                                        Rimuovi programma
-                                    </button>
-                                </form>
-                            @else
-                                <!-- Bottone attiva -->
-                                @if ($pianta)
-                                    <form method="POST"
-                                        action="{{ route('piante.attiva', ['id' => $pianta->id]) }}">
-                                        @csrf
-
-                                        <button type="submit" class="card-btn btn-irrigazione non-attivo">
-                                            Attiva programma per questa pianta
-                                        </button>
-                                    </form>
-                                @else
-                                    <p>Nessuna pianta disponibile. Aggiungi una pianta dal tuo orto.</p>
-                                @endif
-                            @endif
-
-                        </div>
+                                <a href="{{ route('users') }}" class="btn btn-secondary" style="width:auto;">
+                                    Annulla
+                                </a>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
             </section>
+        </main>
+    </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-            </button>
+    <button class="mobile-menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+    </button>
 
-            <script src="{{ asset('template/templatemo-glass-admin-script.js') }}"></script>
-            <!-- TemplateMo 607 Glass Admin -->
+    <script src="{{ asset('template/templatemo-glass-admin-script.js') }}"></script>
 </body>
 
 </html>

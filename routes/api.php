@@ -13,16 +13,22 @@ Route::get('/salva-dati-wifi', [DatiApiController::class, 'store']);
 //route api rest interna categoria pianta
 Route::get('/configurazione-pianta', function () {
 
-    $categoria = DB::table('categorie_piante')
+    $pianta = DB::table('piante')
         ->where('attiva', 1)
         ->first();
 
-    // Se nessuna attiva → prendi la prima (default)
-    if (!$categoria) {
-        $categoria = DB::table('categorie_piante')->first();
-    }
+    if (!$pianta) return response()->json([]);
 
-    return response()->json($categoria);
+    $categoria = DB::table('categorie_piante')
+        ->where('id', $pianta->categoria_id)
+        ->first();
+
+    return response()->json([
+        'pianta_id' => $pianta->id,
+        'soglia_suolo' => $categoria->soglia_suolo,
+        'durata_irrigazione' => $categoria->durata_irrigazione,
+        'intervallo_irrigazione' => $categoria->intervallo_irrigazione
+    ]);
 });
 
 //route api rest esterna meteo

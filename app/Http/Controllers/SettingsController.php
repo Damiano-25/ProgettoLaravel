@@ -14,8 +14,14 @@ class SettingsController extends Controller
             ->where('id', session('utente_id'))
             ->first();
 
-        return view('orti.settings', compact('utente'));
+        $orto = DB::table('orti')
+            ->where('utente_id', session('utente_id'))
+            ->first();
+
+        return view('orti.settings', compact('utente', 'orto'));
     }
+
+
 
     public function updateProfile(Request $request)
     {
@@ -77,5 +83,25 @@ class SettingsController extends Controller
         return redirect()
             ->route('settings')
             ->with('success', 'Aspetto aggiornato');
+    }
+
+    public function updateOrto(Request $request)
+    {
+        $request->validate([
+            'nome_orto' => 'required|string|max:100',
+            'provincia' => 'nullable|string|max:50',
+        ]);
+
+        DB::table('orti')
+            ->where('utente_id', session('utente_id'))
+            ->update([
+                'nome' => $request->nome_orto,
+                'provincia' => $request->provincia,
+                'updated_at' => now(),
+            ]);
+
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Orto aggiornato correttamente');
     }
 }

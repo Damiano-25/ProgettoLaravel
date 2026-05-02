@@ -1,90 +1,204 @@
-DROP DATABASE IF EXISTS laravel;
-CREATE DATABASE IF NOT EXISTS laravel;
-USE laravel;
+DROP DATABASE IF EXISTS laravell;
+CREATE DATABASE IF NOT EXISTS laravell;
+USE laravell;
 
-CREATE TABLE articoli (
-    id INT UNSIGNED AUTO_INCREMENT,
-    nome VARCHAR(30) NOT NULL,
-    descrizione VARCHAR(100),
-    prezzo DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY (id)
+CREATE TABLE utenti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NULL,
+    cognome VARCHAR(100) NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    telefono VARCHAR(30) NULL,
+    bio TEXT NULL,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL
 );
-INSERT INTO articoli (nome, descrizione, prezzo) VALUES
-('Mouse', 'Mouse ottico USB', 29.99),
-('Tastiera', 'Tastiera meccanica RGB', 79.99),
-('Monitor', 'Monitor 24 pollici Full HD', 199.99),
-('Cuffie', 'Cuffie gaming con microfono', 49.99),
-('Webcam', 'Webcam HD con microfono', 39.99);
 
-CREATE TABLE clienti (
-    id INT UNSIGNED AUTO_INCREMENT,
-    nome VARCHAR(30) NOT NULL,
-    cognome VARCHAR(30) NOT NULL,
-    indirizzo_via VARCHAR(50),
-    indirizzo_civico VARCHAR(10),
-    indirizzo_citta VARCHAR(50),
-    PRIMARY KEY (id)
+CREATE TABLE orti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    provincia VARCHAR(50) NULL,
+    utente_id INT NOT NULL,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+
+    FOREIGN KEY (utente_id) REFERENCES utenti(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
-INSERT INTO clienti (nome, cognome, indirizzo_via, indirizzo_civico, indirizzo_citta) VALUES
-('Mario', 'Rossi', 'Via Roma', '12', 'Firenze'),
-('Luca', 'Bianchi', 'Via Milano', '5', 'Pisa'),
-('Anna', 'Verdi', 'Via Napoli', '22', 'Siena'),
-('Giulia', 'Neri', 'Via Firenze', '8', 'Lucca');
 
-CREATE TABLE ordini (
-    id INT UNSIGNED AUTO_INCREMENT,
-    data_ordine DATE NOT NULL,
-    id_cliente INT UNSIGNED,
-    PRIMARY KEY (id),
-    FOREIGN KEY (id_cliente) REFERENCES clienti(id)
+CREATE TABLE categorie_piante (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    livello_acqua ENUM('LOW', 'MEDIUM', 'MEDIUM-HIGH', 'HIGH') NOT NULL,
+    soglia_suolo INT NOT NULL,
+    durata_irrigazione INT NOT NULL,
+    intervallo_irrigazione INT NOT NULL,
+    attiva TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL
 );
-INSERT INTO ordini (data_ordine, id_cliente) VALUES
-('2026-03-01', 1),
-('2026-03-02', 2),
-('2026-03-03', 1),
-('2026-03-03', 3),
-('2026-03-04', 4);
-
-CREATE TABLE ordini_articoli (
-    id_ordine INT UNSIGNED,
-    id_articolo INT UNSIGNED,
-    quantita INT NOT NULL,
-    PRIMARY KEY (id_ordine, id_articolo),
-    FOREIGN KEY (id_ordine) REFERENCES ordini(id),
-    FOREIGN KEY (id_articolo) REFERENCES articoli(id)
-);
-INSERT INTO ordini_articoli (id_ordine, id_articolo, quantita) VALUES
-(1, 1, 2),
-(1, 2, 1),
-(2, 3, 1),
-(3, 1, 1),
-(3, 4, 2),
-(4, 5, 1),
-(5, 2, 3);
-
-----------------------------------------------------------------------
 
 CREATE TABLE tipologie_pianta (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    livello_acqua ENUM('LOW','MEDIUM','MEDIUM-HIGH','HIGH') NOT NULL,
+    nome_pianta VARCHAR(50) NOT NULL,
+    umidita_ideale_perc INT NULL,
+    esposizione_solare_ideale INT NULL
+);
 
-    soglia_suolo INT NOT NULL,                -- quando irrigare (valore sensore)
-    durata_irrigazione INT NOT NULL,          -- secondi
-    intervallo_irrigazione INT NOT NULL,      -- secondi tra due irrigazioni
+CREATE TABLE piante (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    attiva TINYINT(1) DEFAULT 0,
+    orto_id INT NOT NULL,
+    categoria_id INT NOT NULL,
+    tipologia_id INT NULL,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
 
-    attiva BOOLEAN DEFAULT 0,                 -- quale è selezionata
+    FOREIGN KEY (orto_id) REFERENCES orti(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
+    FOREIGN KEY (categoria_id) REFERENCES categorie_piante(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+
+    FOREIGN KEY (tipologia_id) REFERENCES tipologie_pianta(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE dati (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pianta_id INT NOT NULL,
+    temperatura FLOAT NOT NULL,
+    umidita_aria FLOAT NOT NULL,
+    suolo INT NOT NULL,
+    acqua INT NOT NULL,
+    rele TINYINT(1) NOT NULL,
+    data_rilevazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (pianta_id) REFERENCES piante(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- CACHE
+CREATE TABLE cache (
+    `key` VARCHAR(255) PRIMARY KEY,
+    `value` MEDIUMTEXT NOT NULL,
+    `expiration` INT NOT NULL
+);
+
+-- CACHE LOCKS
+CREATE TABLE cache_locks (
+    `key` VARCHAR(255) PRIMARY KEY,
+    `owner` VARCHAR(255) NOT NULL,
+    `expiration` INT NOT NULL
+);
+
+-- FAILED JOBS
+CREATE TABLE failed_jobs (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    uuid VARCHAR(255) NOT NULL UNIQUE,
+    connection TEXT NOT NULL,
+    queue TEXT NOT NULL,
+    payload LONGTEXT NOT NULL,
+    exception LONGTEXT NOT NULL,
+    failed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- JOBS
+CREATE TABLE jobs (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    queue VARCHAR(255) NOT NULL,
+    payload LONGTEXT NOT NULL,
+    attempts TINYINT UNSIGNED NOT NULL,
+    reserved_at INT UNSIGNED NULL,
+    available_at INT UNSIGNED NOT NULL,
+    created_at INT UNSIGNED NOT NULL
+);
+
+-- JOB BATCHES
+CREATE TABLE job_batches (
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    total_jobs INT NOT NULL,
+    pending_jobs INT NOT NULL,
+    failed_jobs INT NOT NULL,
+    failed_job_ids LONGTEXT NOT NULL,
+    options MEDIUMTEXT NULL,
+    cancelled_at INT NULL,
+    created_at INT NOT NULL,
+    finished_at INT NULL
+);
+
+-- MIGRATIONS
+CREATE TABLE migrations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    migration VARCHAR(255) NOT NULL,
+    batch INT NOT NULL
+);
+
+-- PASSWORD RESET TOKENS
+CREATE TABLE password_reset_tokens (
+    email VARCHAR(255) PRIMARY KEY,
+    token VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NULL
+);
+
+-- SESSIONS
+CREATE TABLE sessions (
+    id VARCHAR(255) PRIMARY KEY,
+    user_id BIGINT UNSIGNED NULL,
+    ip_address VARCHAR(45) NULL,
+    user_agent TEXT NULL,
+    payload LONGTEXT NOT NULL,
+    last_activity INT NOT NULL
+);
+
+-- USERS (Laravel default)
+CREATE TABLE users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    email_verified_at TIMESTAMP NULL,
+    password VARCHAR(255) NOT NULL,
+    remember_token VARCHAR(100) NULL,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 );
+
 INSERT INTO categorie_piante
 (nome, livello_acqua, soglia_suolo, durata_irrigazione, intervallo_irrigazione, attiva)
 VALUES
-('Piante grasse', 'LOW', 850, 3, 1296000, 0),
-('Piante aromatiche', 'MEDIUM', 700, 5, 604800, 0),
-('Piante da fiore', 'MEDIUM-HIGH', 650, 5, 172800, 0),
-('Piante ortaggi', 'HIGH', 600, 6, 43200, 1),
-('Piante radici', 'MEDIUM-HIGH', 650, 6, 302400, 0),
-('Piante a foglia', 'HIGH', 600, 9, 86400, 0),
-('Piante ornamentali da interno', 'MEDIUM', 720, 5, 1036800, 0);
+('Piante da interno', 'MEDIUM', 700, 5, 86400, 1),
+('Piante aromatiche', 'LOW', 750, 4, 172800, 1),
+('Ortaggi', 'HIGH', 650, 8, 43200, 1),
+('Radici', 'MEDIUM', 700, 6, 86400, 1),
+('Ortaggi a foglia', 'MEDIUM-HIGH', 680, 7, 43200, 1);
+
+INSERT INTO tipologie_pianta
+(nome_pianta, umidita_ideale_perc, esposizione_solare_ideale)
+VALUES
+('Fragola', 70, 8),
+('Rosmarino', 40, 8),
+('Salvia', 45, 7),
+('Pomodoro', 75, 8),
+('Insalata', 80, 5);
+
+INSERT INTO utenti
+(nome, cognome, email, password)
+VALUES
+('Damiano', 'Armonici', 'test@gmail.com', 'password_hashata');
+
+INSERT INTO orti
+(nome, provincia, utente_id)
+VALUES
+('Orto principale', 'Arezzo', 1);
+
+INSERT INTO piante
+(nome, orto_id, categoria_id, tipologia_id)
+VALUES
+('Fragola balcone', 1, 3, 1);

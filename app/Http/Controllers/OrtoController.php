@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orto;
-use App\Models\RecordPiante;
 use App\Models\Piante;
-use App\Models\TipologiePianta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Services\ArticoloService;
-use function PHPUnit\Framework\returnArgument;
 
 class OrtoController extends Controller
 {
     protected $articoloService;
+
     public function __construct(ArticoloService $articoloService)
     {
         $this->articoloService = $articoloService;
@@ -22,72 +21,73 @@ class OrtoController extends Controller
     {
         $orti = Orto::all();
 
-        /*$dati = RecordPiante::where('id', 1)->first();
+        $dati = DB::table('dati')
+            ->where('pianta_id', $id)
+            ->orderByDesc('id')
+            ->first();
 
-        $nomePianta = \App\Models\Piante::join(
-            'tipologie_pianta',
-            'piante.ID_TIPOLOGIA',
-            '=',
-            'tipologie_pianta.ID_TIPOLOGIA'
+        $pianta = DB::table('piante')
+            ->join('categorie_piante', 'piante.categoria_id', '=', 'categorie_piante.id')
+            ->where('piante.id', $id)
+            ->select(
+                'piante.id',
+                'piante.nome as nome_pianta',
+                'piante.attiva',
+                'categorie_piante.nome as categoria'
+            )
+            ->first();
+
+        $nomePianta = $pianta->nome_pianta ?? 'Pianta non trovata';
+
+        return view('orti.index', compact('orti', 'dati', 'nomePianta', 'pianta'));
+    }
+
+    public function users()
+{
+    $sub = DB::table('dati')
+        ->selectRaw('MAX(id) as id')
+        ->groupBy('pianta_id');
+
+    $dati2 = DB::table('piante')
+        ->join('orti', 'piante.orto_id', '=', 'orti.id')
+        ->join('categorie_piante', 'piante.categoria_id', '=', 'categorie_piante.id')
+        ->leftJoin('dati', function ($join) use ($sub) {
+            $join->on('piante.id', '=', 'dati.pianta_id')
+                ->whereIn('dati.id', $sub);
+        })
+        ->where('orti.utente_id', session('utente_id')) // QUI
+        ->select(
+            'piante.id as ID_PIANTA',
+            'piante.nome as NOME_PIANTA',
+            'orti.provincia as PROVINCIA_ORTO',
+            'dati.data_rilevazione as DATA_RECORD',
+            'dati.suolo as UMIDITA_RADICI_PERC'
         )
-        ->where('piante.ID_PIANTA', $dati->ID_PIANTA)
-        ->value('tipologie_pianta.NOME_PIANTA');*/
-        $dati = RecordPiante::where('ID_PIANTA', $id)
-        ->orderByDesc('id') // prende il record più grande
+        ->get();
+
+    $dati = DB::table('dati')
+        ->join('piante', 'dati.pianta_id', '=', 'piante.id')
+        ->join('orti', 'piante.orto_id', '=', 'orti.id')
+        ->where('orti.utente_id', session('utente_id'))
+        ->orderByDesc('dati.id')
+        ->select('dati.*')
         ->first();
 
-        $nomePianta = Piante::join(
-            'tipologie_pianta',
-            'piante.ID_TIPOLOGIA',
-            '=',
-            'tipologie_pianta.ID_TIPOLOGIA'
-        )
-        ->where('piante.ID_PIANTA', $id)
-        ->value('tipologie_pianta.NOME_PIANTA');
-        
-        return view('orti.index', compact('orti', 'dati', 'nomePianta'));
-    }
-    public function users()
-    {
-        $dati = RecordPiante::where('id', 1)->first();
-        $sub = RecordPiante::selectRaw('MAX(id) as id')
-        ->groupBy('ID_PIANTA');
+    $nomePianta = $dati2->first()->NOME_PIANTA ?? 'Nessuna pianta';
 
-        $dati2 = Piante::join('orti', 'piante.ID_ORTO', '=', 'orti.ID_ORTO')
-            ->join('tipologie_pianta', 'piante.ID_TIPOLOGIA', '=', 'tipologie_pianta.ID_TIPOLOGIA')
-            ->leftJoin('record_piante', function ($join) use ($sub) {
-                $join->on('piante.ID_PIANTA', '=', 'record_piante.ID_PIANTA')
-                    ->whereIn('record_piante.id', $sub);
-            })
-            ->select(
-                'piante.ID_PIANTA',
-                'tipologie_pianta.NOME_PIANTA',
-                'orti.PROVINCIA_ORTO',
-                'record_piante.DATA_RECORD',
-                'record_piante.UMIDITA_RADICI_PERC'
-            )
-            ->get();
-        
-        $nomePianta = \App\Models\Piante::join(
-            'tipologie_pianta',
-            'piante.ID_TIPOLOGIA',
-            '=',
-            'tipologie_pianta.ID_TIPOLOGIA'
-        )
-        ->where('piante.ID_PIANTA', $dati->ID_PIANTA)
-        ->value('tipologie_pianta.NOME_PIANTA');
+    $nPiante = DB::table('piante')
+        ->join('orti', 'piante.orto_id', '=', 'orti.id')
+        ->where('orti.utente_id', session('utente_id'))
+        ->count();
 
-        $nPiante=RecordPiante::count();
-        return view('orti.users', compact('dati', 'nomePianta', 'nPiante', 'dati2'));
-    }
+    return view('orti.users', compact('dati', 'nomePianta', 'nPiante', 'dati2'));
+}
 
-    //creo metodo per mostrare form per inserire nuovo sito
     public function create()
     {
         return view('orti.create');
     }
 
-    //creo metodo che salva sito nel db
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -100,14 +100,11 @@ class OrtoController extends Controller
         return redirect()->route('orti.index');
     }
 
-    //mostra form di modifica di un sito
     public function edit(Orto $orti)
     {
         return view('orti.edit', compact('orti'));
     }
 
-    //request --> contiene dati inviarti dal client
-    //sito --> sito selezionato
     public function update(Request $request, Orto $orti)
     {
         $data = $request->validate([
@@ -120,10 +117,10 @@ class OrtoController extends Controller
         return redirect()->route('orti.index');
     }
 
-    //creo metodo per rimuovere sito
     public function destroy(Orto $orti)
     {
         $orti->delete();
+
         return redirect()->route('orti.index');
     }
 }

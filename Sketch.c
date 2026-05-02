@@ -8,7 +8,7 @@
 char nome_rete[] = "TIM-51297409";
 char password[] = "jSf6CaXcL7YZfi2h";
 
-const char server[] = "192.168.1.8";  // IP PC con Laravel
+const char server[] = "192.168.1.8";
 WiFiClient client;
 
 // -------------------------
@@ -24,7 +24,7 @@ LiquidCrystal lcd(2, 3, 4, 5, 6, 7);
 
 const int PIN_SUOLO = A0;
 const int PIN_ACQUA = A1;
-const int PIN_RELE = A2;
+const int PIN_RELE  = A2;
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -32,17 +32,19 @@ DHT dht(DHTPIN, DHTTYPE);
 // VARIABILI
 // -------------------------
 bool releAcceso = false;
-bool statoRelePrecedente = false;
 
 unsigned long ultimaLettura = 0;
-const unsigned long intervalloLettura = 20000;  // 20 secondi
+const unsigned long intervalloLettura = 20000;
 
-// Configurazione presa da Laravel
+// CONFIGURAZIONE DA LARAVEL
 int sogliaSuolo = 700;
-int durataIrrigazione = 5;                    // secondi
-unsigned long intervalloIrrigazione = 20000;  // millisecondi, valore iniziale per test
+int durataIrrigazione = 5;
+unsigned long intervalloIrrigazione = 20000;
 
 unsigned long ultimaIrrigazione = 0;
+
+
+int piantaId = 0;
 
 // -------------------------
 // SETUP
@@ -52,38 +54,24 @@ void setup() {
   delay(2000);
 
   dht.begin();
-
   pinMode(PIN_RELE, OUTPUT);
 
-  // Relè attivo LOW → inizialmente spento
   digitalWrite(PIN_RELE, HIGH);
-  releAcceso = false;
-  statoRelePrecedente = false;
 
   lcd.begin(16, 2);
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Sistema avviato");
-  lcd.setCursor(0, 1);
-  lcd.print("WiFi...");
-
-  Serial.println("Connessione al WiFi...");
+  lcd.print("Avvio...");
 
   while (WiFi.begin(nome_rete, password) != WL_CONNECTED) {
-    Serial.println("Connessione fallita, riprovo...");
+    Serial.println("Connessione fallita...");
     delay(2000);
   }
 
   Serial.println("WiFi connesso!");
-
   lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("WiFi connesso");
+  lcd.print("WiFi OK");
   delay(2000);
-
   lcd.clear();
 
-  // Lettura iniziale configurazione pianta
   leggiConfigurazionePianta();
 }
 
@@ -101,81 +89,32 @@ void loop() {
     int valoreSuolo = analogRead(PIN_SUOLO);
     int valoreAcqua = analogRead(PIN_ACQUA);
 
-    Serial.println("----------- LETTURA SENSORI -----------");
-
     if (isnan(temperatura) || isnan(umiditaAria)) {
-      Serial.println("Errore lettura DHT11");
+      Serial.println("Errore DHT");
       return;
     }
 
-    // Legge eventuale categoria aggiornata da Laravel
+    // Aggiorna configurazione
     leggiConfigurazionePianta();
 
-    Serial.print("Temperatura: ");
-    Serial.print(temperatura);
-    Serial.println(" °C");
-
-    Serial.print("Umidita aria: ");
-    Serial.print(umiditaAria);
-    Serial.println(" %");
-
-    Serial.print("Suolo: ");
-    Serial.println(valoreSuolo);
-
-    Serial.print("Acqua: ");
-    Serial.println(valoreAcqua);
-
-    Serial.print("Soglia suolo DB: ");
-    Serial.println(sogliaSuolo);
-
-    Serial.print("Durata irrigazione DB: ");
-    Serial.print(durataIrrigazione);
-    Serial.println(" sec");
-
-    Serial.print("Intervallo irrigazione DB: ");
-    Serial.print(intervalloIrrigazione / 1000);
-    Serial.println(" sec");
+    Serial.println("------ DATI ------");
+    Serial.print("Pianta ID: "); Serial.println(piantaId);
+    Serial.print("Temp: "); Serial.println(temperatura);
+    Serial.print("Umidita: "); Serial.println(umiditaAria);
+    Serial.print("Suolo: "); Serial.println(valoreSuolo);
+    Serial.print("Acqua: "); Serial.println(valoreAcqua);
 
     // -------------------------
-    // LOGICA RELÈ / POMPA
+    // LOGICA IRRIGAZIONE
     // -------------------------
-    statoRelePrecedente = releAcceso;
-
-    // condizioni base
     bool acquaPresente = valoreAcqua > 300;
     bool terrenoSecco = valoreSuolo > sogliaSuolo;
-    bool temperaturaAlta = temperatura > 28;
 
-    // tempo passato dall'ultima irrigazione
     unsigned long tempoPassato = millis() - ultimaIrrigazione;
 
-    // tempo minimo di sicurezza per non irrigare troppo spesso
-    unsigned long intervalloMinimoSicurezza = 20000;  // 20 secondi per test
+    if (acquaPresente && terrenoSecco && tempoPassato >= intervalloIrrigazione) {
 
-    // 1) irrigazione programmata secondo categoria
-    bool irrigazioneProgrammata = tempoPassato >= intervalloIrrigazione;
-
-    // 2) irrigazione per terreno secco, ma non continua
-    bool irrigazionePerSuolo = terrenoSecco && tempoPassato >= intervalloMinimoSicurezza;
-
-    // 3) irrigazione per temperatura alta, ma solo dopo un po' di tempo
-    bool irrigazionePerCaldo = temperaturaAlta && tempoPassato >= intervalloMinimoSicurezza;
-
-    if (
-      acquaPresente && (irrigazioneProgrammata || irrigazionePerSuolo || irrigazionePerCaldo)) {
-      Serial.println("Pompa attiva");
-
-      if (irrigazioneProgrammata) {
-        Serial.println("Motivo: tempo categoria raggiunto");
-      }
-
-      if (irrigazionePerSuolo) {
-        Serial.println("Motivo: terreno secco");
-      }
-
-      if (irrigazionePerCaldo) {
-        Serial.println("Motivo: temperatura alta");
-      }
+      Serial.println("Irrigazione attiva");
 
       digitalWrite(PIN_RELE, LOW);
       releAcceso = true;
@@ -186,30 +125,23 @@ void loop() {
       releAcceso = false;
 
       ultimaIrrigazione = millis();
-
-    } else {
-      digitalWrite(PIN_RELE, HIGH);
-      releAcceso = false;
     }
 
-    Serial.print("Rele: ");
-    Serial.println(releAcceso ? "ACCESO" : "SPENTO");
-
     // -------------------------
-    // INVIO DATI API
+    // INVIO DATI
     // -------------------------
     inviaDatiPHP(
       temperatura,
       umiditaAria,
       valoreSuolo,
       valoreAcqua,
-      releAcceso);
+      releAcceso
+    );
 
     // -------------------------
     // LCD
     // -------------------------
     lcd.clear();
-
     lcd.setCursor(0, 0);
     lcd.print("T:");
     lcd.print((int)temperatura);
@@ -221,147 +153,93 @@ void loop() {
     lcd.print(valoreSuolo);
     lcd.print(" A:");
     lcd.print(valoreAcqua);
-
-    Serial.println("----------------------------------------");
-    Serial.println();
   }
 }
 
 // -------------------------
-// LETTURA CONFIGURAZIONE PIANTA DA LARAVEL
+// LETTURA CONFIGURAZIONE
 // -------------------------
 void leggiConfigurazionePianta() {
 
   if (client.connect(server, 8000)) {
 
-    String url = "/api/configurazione-pianta";
-
-    Serial.println("Lettura configurazione pianta...");
-    Serial.println(url);
-
-    client.print("GET " + url + " HTTP/1.1\r\n");
+    client.print("GET /api/configurazione-pianta HTTP/1.1\r\n");
     client.print("Host: ");
     client.print(server);
-    client.print("\r\n");
-    client.print("Connection: close\r\n\r\n");
+    client.print("\r\nConnection: close\r\n\r\n");
 
     String risposta = "";
 
-    unsigned long timeout = millis();
-
-    while (client.connected() && millis() - timeout < 5000) {
-      while (client.available()) {
-        char c = client.read();
-        risposta += c;
-        timeout = millis();
-      }
+    while (client.available()) {
+      risposta += (char)client.read();
     }
 
     client.stop();
 
     int jsonStart = risposta.indexOf("{");
-
-    if (jsonStart == -1) {
-      Serial.println("Errore: JSON configurazione non trovato");
-      return;
-    }
+    if (jsonStart == -1) return;
 
     String json = risposta.substring(jsonStart);
 
-    int nuovaSoglia = estraiNumero(json, "soglia_suolo");
-    int nuovaDurata = estraiNumero(json, "durata_irrigazione");
-    int nuovoIntervallo = estraiNumero(json, "intervallo_irrigazione");
+    sogliaSuolo = estraiNumero(json, "soglia_suolo");
+    durataIrrigazione = estraiNumero(json, "durata_irrigazione");
+    intervalloIrrigazione = estraiNumero(json, "intervallo_irrigazione") * 1000;
 
-    if (nuovaSoglia > 0) {
-      sogliaSuolo = nuovaSoglia;
-    }
 
-    if (nuovaDurata > 0) {
-      durataIrrigazione = nuovaDurata;
-    }
+    piantaId = estraiNumero(json, "pianta_id");
 
-    if (nuovoIntervallo > 0) {
-      intervalloIrrigazione = (unsigned long)nuovoIntervallo * 1000;
-    }
-
-    Serial.println("Configurazione aggiornata:");
-    Serial.print("Soglia suolo: ");
-    Serial.println(sogliaSuolo);
-    Serial.print("Durata irrigazione: ");
-    Serial.println(durataIrrigazione);
-    Serial.print("Intervallo irrigazione ms: ");
-    Serial.println(intervalloIrrigazione);
-
-  } else {
-    Serial.println("Errore connessione configurazione pianta");
+    Serial.println("Config aggiornata");
   }
 }
 
 // -------------------------
-// ESTRAZIONE NUMERO DA JSON SEMPLICE
+// ESTRAI NUMERO JSON
 // -------------------------
 int estraiNumero(String json, String campo) {
   String chiave = "\"" + campo + "\":";
 
   int start = json.indexOf(chiave);
-
-  if (start == -1) {
-    return 0;
-  }
+  if (start == -1) return 0;
 
   start += chiave.length();
 
   int end = json.indexOf(",", start);
+  if (end == -1) end = json.indexOf("}", start);
 
-  if (end == -1) {
-    end = json.indexOf("}", start);
-  }
-
-  String valore = json.substring(start, end);
-  valore.trim();
-
-  return valore.toInt();
+  return json.substring(start, end).toInt();
 }
 
 // -------------------------
-// FUNZIONE INVIO DATI SENSORI A LARAVEL
+// INVIO DATI
 // -------------------------
 void inviaDatiPHP(float temperatura, float umiditaAria, int suolo, int acqua, bool rele) {
+
+  if (piantaId == 0) {
+    Serial.println("Nessuna pianta attiva");
+    return;
+  }
 
   if (client.connect(server, 8000)) {
 
     String url = "/api/salva-dati-wifi?";
-    url += "temperatura=" + String(temperatura, 1);
+    url += "pianta_id=" + String(piantaId);
+    url += "&temperatura=" + String(temperatura, 1);
     url += "&umidita_aria=" + String(umiditaAria, 1);
     url += "&suolo=" + String(suolo);
     url += "&acqua=" + String(acqua);
     url += "&rele=" + String(rele ? 1 : 0);
 
-    Serial.println("Invio richiesta dati:");
     Serial.println(url);
 
     client.print("GET " + url + " HTTP/1.1\r\n");
     client.print("Host: ");
     client.print(server);
-    client.print("\r\n");
-    client.print("Connection: close\r\n\r\n");
+    client.print("\r\nConnection: close\r\n\r\n");
 
-    unsigned long timeout = millis();
-
-    while (client.connected() && millis() - timeout < 5000) {
-      while (client.available()) {
-        char c = client.read();
-        Serial.write(c);
-        timeout = millis();
-      }
+    while (client.available()) {
+      Serial.write(client.read());
     }
 
     client.stop();
-
-    Serial.println();
-    Serial.println("Dati inviati al server");
-
-  } else {
-    Serial.println("Errore connessione invio dati!");
   }
 }
