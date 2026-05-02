@@ -35,7 +35,7 @@
                     <ul>
                         <ul>
                             <li class="nav-item">
-                                <a href="{{ route('index') }}" class="nav-link">
+                                <a href="{{ route('index', ['id' => 1]) }}" class="nav-link">
                                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
                                         <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -133,7 +133,7 @@
                 <div class="page-header">
                     <h1 class="page-title">Meteo</h1>
                     <div class="page-breadcrumb">
-                        <a href="{{ route('index') }}">Dashboard</a>
+                        <a href="{{ route('index', ['id' => 1]) }}">Dashboard</a>
                         <span>/</span>
                         <span>Meteo</span>
                     </div>

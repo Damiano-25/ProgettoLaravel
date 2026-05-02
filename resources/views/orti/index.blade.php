@@ -42,7 +42,7 @@ https://templatemo.com/tm-607-glass-admin
                     <ul>
                         <ul>
                             <li class="nav-item">
-                                <a href="{{ route('index') }}" class="nav-link">
+                                <a href="{{ route('index', ['id' => 1]) }}" class="nav-link">
                                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
                                         <rect x="3" y="3" width="7" height="7" rx="1" />
