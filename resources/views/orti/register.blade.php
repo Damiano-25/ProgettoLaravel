@@ -65,9 +65,9 @@ https://templatemo.com/tm-607-glass-admin
                     @csrf
 
                     <div class="form-group">
-                        <label class="form-label" for="fullname">Full Name</label>
-                        <input type="text" name="name" id="fullname" class="form-input"
-                            placeholder="Enter your full name" required>
+                        <label class="form-label" for="fullname">Nome</label>
+                        <input type="text" name="nome" id="fullname" class="form-input"
+                            placeholder="Inserisci il tuo nome" required>
                     </div>
 
                     <div class="form-group">

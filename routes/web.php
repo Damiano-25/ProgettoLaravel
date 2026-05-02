@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Utente;
+use App\Http\Controllers\SettingsController;
 
 
 Route::get('/', function () {
@@ -85,7 +86,7 @@ Route::post('/login', function (Request $request) {
 
     session([
         'utente_id' => $utente->id,
-        'utente_nome' => $utente->name,
+        'utente_nome' => $utente->nome,
     ]);
 
     return redirect()->route('index');
@@ -94,16 +95,32 @@ Route::post('/login', function (Request $request) {
 //route registrazione
 Route::post('/register', function (Request $request) {
     $dati = $request->validate([
-        'name' => 'required|string|max:255',
+        'nome' => 'required|string|max:255',
         'email' => 'required|email|unique:utenti,email',
         'password' => 'required|min:6|confirmed', //confirmed
     ]);
 
     Utente::create([
-        'name' => $dati['name'],
+        'nome' => $dati['nome'],
         'email' => $dati['email'],
         'password' => Hash::make($dati['password']), //password hashata
     ]);
 
+    
+
     return redirect()->route('login');
 })->name('register.post');
+
+
+
+//route settings
+Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+
+Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])
+    ->name('settings.profile.update');
+
+Route::post('/settings/password', [SettingsController::class, 'updatePassword'])
+    ->name('settings.password.update');
+
+Route::post('/settings/appearance', [SettingsController::class, 'updateAppearance'])
+    ->name('settings.appearance.update');

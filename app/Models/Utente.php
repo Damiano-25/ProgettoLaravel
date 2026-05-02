@@ -9,7 +9,7 @@ class Utente extends Model
     protected $table = 'utenti';
 
     protected $fillable = [
-        'name',
+        'nome',
         'email',
         'password',
     ];

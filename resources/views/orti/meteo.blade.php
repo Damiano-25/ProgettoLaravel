@@ -118,13 +118,11 @@
                 <div class="user-profile">
                     <div class="user-avatar">TM</div>
                     <div class="user-info">
-                        <div class="user-name">TemplateMo</div>
-                        <div class="user-role">Administrator</div>
+                        <div class="user-name">
+                            {{ session('utente_nome') }}
+                        </div>
+                        <div class="user-role">Utente</div>
                     </div>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <polyline points="6 9 12 15 18 9" />
-                    </svg>
                 </div>
             </div>
         </aside>
@@ -236,7 +234,7 @@
         </main>
     </div>
 
-    
+
 
     <!-- Mobile Menu Toggle -->
     <button class="mobile-menu-toggle">
@@ -248,45 +246,45 @@
     </button>
 
     <script>
-function cercaMeteo() {
-    const citta = document.getElementById('cittaInput').value;
+        function cercaMeteo() {
+            const citta = document.getElementById('cittaInput').value;
 
-    if (citta === "") {
-        alert("Inserisci una città");
-        return;
-    }
+            if (citta === "") {
+                alert("Inserisci una città");
+                return;
+            }
 
-    fetch(`/api/meteo-esterno?citta=${citta}`)
-        .then(res => res.json())
-        .then(data => {
+            fetch(`/api/meteo-esterno?citta=${citta}`)
+                .then(res => res.json())
+                .then(data => {
 
-            console.log(data);
+                    console.log(data);
 
-            document.getElementById('citta').innerText = data.name;
-            document.getElementById('temp').innerText = data.main.temp + "°C";
-            document.getElementById('meteo').innerText = data.weather[0].description;
-            document.getElementById('umidita').innerText = data.main.humidity + "%";
+                    document.getElementById('citta').innerText = data.name;
+                    document.getElementById('temp').innerText = data.main.temp + "°C";
+                    document.getElementById('meteo').innerText = data.weather[0].description;
+                    document.getElementById('umidita').innerText = data.main.humidity + "%";
 
-        })
-        .catch(err => {
-            console.error("Errore:", err);
-        });
-}
+                })
+                .catch(err => {
+                    console.error("Errore:", err);
+                });
+        }
 
 
-function resetMeteo() {
-    
-    document.getElementById("cittaInput").value = "";
-    document.getElementById("citta").innerText = "--";
-    document.getElementById("temp").innerText = "--";
-    document.getElementById("meteo").innerText = "--";
-    document.getElementById("umidita").innerText = "--";
-}
+        function resetMeteo() {
 
-document.addEventListener("DOMContentLoaded", resetMeteo);
-</script>
+            document.getElementById("cittaInput").value = "";
+            document.getElementById("citta").innerText = "--";
+            document.getElementById("temp").innerText = "--";
+            document.getElementById("meteo").innerText = "--";
+            document.getElementById("umidita").innerText = "--";
+        }
 
-<script src="{{ asset('template/templatemo-glass-admin-script.js') }}"></script>
+        document.addEventListener("DOMContentLoaded", resetMeteo);
+    </script>
+
+    <script src="{{ asset('template/templatemo-glass-admin-script.js') }}"></script>
 
 </body>
 

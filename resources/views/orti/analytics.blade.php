@@ -125,13 +125,11 @@ https://templatemo.com/tm-607-glass-admin
                 <div class="user-profile">
                     <div class="user-avatar">TM</div>
                     <div class="user-info">
-                        <div class="user-name">TemplateMo</div>
-                        <div class="user-role">Administrator</div>
+                        <div class="user-name">
+                            {{ session('utente_nome') }}
+                        </div>
+                        <div class="user-role">Utente</div>
                     </div>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <polyline points="6 9 12 15 18 9" />
-                    </svg>
                 </div>
             </div>
         </aside>
