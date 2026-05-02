@@ -11,7 +11,8 @@ class RecordPiante extends Model
     protected $fillable = [
         'UMIDITA_RADICI_PERC',
         'ESPOSIZIONE_SOLARE_EFFETTIVA',
-        'DATA_RECORD'
+        'DATA_RECORD',
+        'ID_PIANTA'
     ];
     public $timestamps = false;
 }

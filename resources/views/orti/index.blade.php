@@ -256,7 +256,7 @@ https://templatemo.com/tm-607-glass-admin
                     <div class="stat-card-inner">
                         <div class="stat-info">
                             <h3>Tipologia</h3>
-                            Pomodoro
+                            {{ $nomePianta }}
 
                         </div>
                         <div class="stat-icon success">

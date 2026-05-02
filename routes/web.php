@@ -21,6 +21,8 @@ Route::resource('articoli', ArticoloController::class);
 Route::resource('clienti', ClienteController::class);
 Route::resource('ordini', OrdineController::class);
 Route::get('/index', [OrtoController::class, 'index'])->name('index');
+
+Route::get('/users', [OrtoController::class, 'users'])->name('users');
 //Route::get('/index', function () {
    // return view('orti.index');
 //})->name('index');
@@ -29,9 +31,9 @@ Route::get('/analytics', function () {
     return view('orti.analytics');
 })->name('analytics');
 
-Route::get('/users', function () {
-    return view('orti.users');
-})->name('users');
+//Route::get('/users', function () {
+  //  return view('orti.users');
+//})->name('users');
 
 Route::get('/settings', function () {
     return view('orti.settings');

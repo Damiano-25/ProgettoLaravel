@@ -36,7 +36,7 @@ https://templatemo.com/tm-607-glass-admin
                 <span class="logo-text">GlassDash</span>
             </div>
 
-                <ul class="nav-menu">
+            <ul class="nav-menu">
                 <li class="nav-section">
                     <span class="nav-section-title">Main Menu</span>
                     <ul>
@@ -186,99 +186,7 @@ https://templatemo.com/tm-607-glass-admin
             </nav>
 
             <!-- Stats Cards -->
-            <section class="stats-grid">
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Total Users</h3>
-                            <div class="stat-value">24,521</div>
-                            <span class="stat-change positive">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2">
-                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                                </svg>
-                                +8.2%
-                            </span>
-                        </div>
-                        <div class="stat-icon cyan">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--emerald-light)" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                <circle cx="9" cy="7" r="4" />
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Active Now</h3>
-                            <div class="stat-value">1,234</div>
-                            <span class="stat-change positive">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2">
-                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                                </svg>
-                                +12.5%
-                            </span>
-                        </div>
-                        <div class="stat-icon magenta">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M12 6v6l4 2" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>New Today</h3>
-                            <div class="stat-value">156</div>
-                            <span class="stat-change negative">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2">
-                                    <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
-                                </svg>
-                                -3.1%
-                            </span>
-                        </div>
-                        <div class="stat-icon purple">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="2">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                <circle cx="8.5" cy="7" r="4" />
-                                <line x1="20" y1="8" x2="20" y2="14" />
-                                <line x1="23" y1="11" x2="17" y2="11" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Premium Users</h3>
-                            <div class="stat-value">4,892</div>
-                            <span class="stat-change positive">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2">
-                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                                </svg>
-                                +18.7%
-                            </span>
-                        </div>
-                        <div class="stat-icon success">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2">
-                                <polygon
-                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <!-- Users Table -->
             <section class="content-grid" style="grid-template-columns: 1fr;">
@@ -304,168 +212,85 @@ https://templatemo.com/tm-607-glass-admin
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Joined</th>
-                                    <th>Last Active</th>
+                                    <th>Pianta</th>
+                                    <th>Provincia_orto</th>
+                                    <th>Stato umidità</th>
+                                    <th>Data</th>
+                                    <th>ID Pianta</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="table-user">
-                                            <div class="table-avatar"
-                                                style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">
-                                                JD</div>
-                                            <div class="table-user-info"><span class="table-user-name">John
-                                                    Doe</span><span class="table-user-email">john@example.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Administrator</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td>Jan 15, 2024</td>
-                                    <td>2 mins ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="table-user">
-                                            <div class="table-avatar"
-                                                style="background: linear-gradient(135deg, var(--gold), var(--amber));">
-                                                AS</div>
-                                            <div class="table-user-info"><span class="table-user-name">Anna
-                                                    Smith</span><span class="table-user-email">anna@example.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Editor</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td>Feb 22, 2024</td>
-                                    <td>15 mins ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
+                                <?php foreach ($dati2 as $row): ?>
+
                                 <tr>
                                     <td>
                                         <div class="table-user">
                                             <div class="table-avatar"
                                                 style="background: linear-gradient(135deg, var(--success), var(--emerald));">
-                                                MJ</div>
-                                            <div class="table-user-info"><span class="table-user-name">Mike
-                                                    Johnson</span><span
-                                                    class="table-user-email">mike@example.com</span></div>
-                                        </div>
-                                    </td>
-                                    <td>User</td>
-                                    <td><span class="status-badge pending">Away</span></td>
-                                    <td>Mar 10, 2024</td>
-                                    <td>2 hours ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="table-user">
-                                            <div class="table-avatar"
-                                                style="background: linear-gradient(135deg, var(--coral), var(--gold));">
-                                                EW</div>
-                                            <div class="table-user-info"><span class="table-user-name">Emily
-                                                    White</span><span class="table-user-email">emily@example.com</span>
+                                                <?php echo substr($row->NOME_PIANTA, 0, 2); ?>
+                                            </div>
+
+                                            <div class="table-user-info">
+                                                <span class="table-user-name">
+                                                    <?php echo $row->NOME_PIANTA; ?>
+                                                </span>
+
+                                                <span class="table-user-email">
+                                                    ID: <?php echo $row->ID_PIANTA; ?>
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>Moderator</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td>Apr 5, 2024</td>
-                                    <td>30 mins ago</td>
+
                                     <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
+                                        <?php echo $row->PROVINCIA_ORTO; ?>
+                                    </td>
+
+                                    <td>
+                                        <?php
+                                        $status = 'Good';
+                                        
+                                        if ($row->UMIDITA_RADICI_PERC < 60) {
+                                            $status = 'Low';
+                                        } elseif ($row->UMIDITA_RADICI_PERC > 75) {
+                                            $status = 'High';
+                                        }
+                                        
+                                        $class = 'completed';
+                                        if ($status == 'Low') {
+                                            $class = 'pending';
+                                        }
+                                        if ($status == 'High') {
+                                            $class = 'processing';
+                                        }
+                                        ?>
+
+                                        <span class="status-badge <?php echo $class; ?>">
+                                            <?php echo $status; ?>
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <?php echo $row->DATA_RECORD ?? 'N/A'; ?>
+                                    </td>
+
+                                    <td>
+                                        <?php echo $row->ID_PIANTA; ?>
+                                    </td>
+
+                                    <td>
+                                        <button class="card-btn" style="padding: 6px 12px;"><a
+                                                href="{{ route('index') }}" class="nav-link">View</a></button>
+
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="table-user">
-                                            <div class="table-avatar"
-                                                style="background: linear-gradient(135deg, var(--emerald), var(--gold));">
-                                                RB</div>
-                                            <div class="table-user-info"><span class="table-user-name">Robert
-                                                    Brown</span><span
-                                                    class="table-user-email">robert@example.com</span></div>
-                                        </div>
-                                    </td>
-                                    <td>User</td>
-                                    <td><span class="status-badge processing">Offline</span></td>
-                                    <td>May 18, 2024</td>
-                                    <td>3 days ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="table-user">
-                                            <div class="table-avatar"
-                                                style="background: linear-gradient(135deg, var(--warning), var(--gold));">
-                                                SL</div>
-                                            <div class="table-user-info"><span class="table-user-name">Sarah
-                                                    Lee</span><span class="table-user-email">sarah@example.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Editor</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td>Jun 8, 2024</td>
-                                    <td>5 mins ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="table-user">
-                                            <div class="table-avatar"
-                                                style="background: linear-gradient(135deg, var(--info), var(--emerald));">
-                                                DK</div>
-                                            <div class="table-user-info"><span class="table-user-name">David
-                                                    Kim</span><span class="table-user-email">david@example.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>User</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td>Jul 22, 2024</td>
-                                    <td>1 hour ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="table-user">
-                                            <div class="table-avatar"
-                                                style="background: linear-gradient(135deg, var(--danger), var(--coral));">
-                                                LM</div>
-                                            <div class="table-user-info"><span class="table-user-name">Lisa
-                                                    Martinez</span><span
-                                                    class="table-user-email">lisa@example.com</span></div>
-                                        </div>
-                                    </td>
-                                    <td>Moderator</td>
-                                    <td><span class="status-badge pending">Away</span></td>
-                                    <td>Aug 14, 2024</td>
-                                    <td>4 hours ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
+
+                                <?php endforeach; ?>
                             </tbody>
+
+
+
                         </table>
                     </div>
                 </div>

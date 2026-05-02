@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Orto extends Model
+class Piante extends Model
 {
-    protected $table = 'orti'; //nome tabella gia esistente
+    protected $table = 'piante'; //nome tabella gia esistente
 
     protected $fillable = [
+        'ID_PIANTA',
         'ID_ORTO',
-        'PROVINCIA_ORTO',
+        'ID_TIPOLOGIA'
     ];
     public $timestamps = false;
 }
