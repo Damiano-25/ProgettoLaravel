@@ -3,43 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orto;
-use App\Models\Piante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Services\ArticoloService;
 
 class OrtoController extends Controller
 {
-    protected $articoloService;
-
-    public function __construct(ArticoloService $articoloService)
+    public function index($id = null)
     {
-        $this->articoloService = $articoloService;
-    }
+        $orti = Orto::where('utente_id', session('utente_id'))->get();
 
-    public function index($id)
-    {
-        $orti = Orto::all();
+        $pianta = null;
+        $dati = null;
 
-        $dati = DB::table('dati')
-            ->where('pianta_id', $id)
-            ->orderByDesc('id')
-            ->first();
+        if ($id) {
+            $pianta = DB::table('piante')
+                ->join('orti', 'piante.orto_id', '=', 'orti.id')
+                ->join('categorie_piante', 'piante.categoria_id', '=', 'categorie_piante.id')
+                ->where('piante.id', $id)
+                ->where('orti.utente_id', session('utente_id'))
+                ->select(
+                    'piante.id',
+                    'piante.nome as nome_pianta',
+                    'piante.attiva',
+                    'categorie_piante.nome as categoria'
+                )
+                ->first();
 
-        $pianta = DB::table('piante')
-            ->join('categorie_piante', 'piante.categoria_id', '=', 'categorie_piante.id')
-            ->where('piante.id', $id)
-            ->select(
-                'piante.id',
-                'piante.nome as nome_pianta',
-                'piante.attiva',
-                'categorie_piante.nome as categoria'
-            )
-            ->first();
+            if ($pianta) {
+                $dati = DB::table('dati')
+                    ->where('pianta_id', $id)
+                    ->orderByDesc('id')
+                    ->first();
+            }
+        }
 
-        $nomePianta = $pianta->nome_pianta ?? 'Pianta non trovata';
+        $nomePianta = $pianta->nome_pianta ?? null;
 
-        return view('orti.index', compact('orti', 'dati', 'nomePianta', 'pianta'));
+        return view('orti.dati_pianta', compact('orti', 'dati', 'nomePianta', 'pianta'));
     }
 
     public function users()
@@ -80,7 +80,7 @@ class OrtoController extends Controller
             ->where('orti.utente_id', session('utente_id'))
             ->count();
 
-        return view('orti.users', compact('dati', 'nomePianta', 'nPiante', 'dati2'));
+        return view('orti.dati_orto', compact('dati', 'nomePianta', 'nPiante', 'dati2'));
     }
 
     public function create()

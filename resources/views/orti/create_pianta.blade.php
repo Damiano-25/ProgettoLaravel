@@ -28,7 +28,7 @@
 
                         <!-- PIANTA -->
                         <li class="nav-item">
-                            <a href="{{ route('index', ['id' => 1]) }}" class="nav-link">
+                            <a href="{{ route('dati_pianta') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- foglia -->
@@ -55,7 +55,7 @@
 
                         <!-- ISTRUZIONI -->
                         <li class="nav-item">
-                            <a href="{{ route('analytics') }}" class="nav-link">
+                            <a href="{{ route('istruzioni') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- libro / guida -->
@@ -68,7 +68,7 @@
 
                         <!-- ORTO -->
                         <li class="nav-item">
-                            <a href="{{ route('users') }}" class="nav-link">
+                            <a href="{{ route('dati_orto') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- piantine multiple -->
@@ -129,7 +129,7 @@
                 <h1 class="page-title">Aggiungi pianta</h1>
 
                 <div class="navbar-right">
-                    <a href="{{ route('users') }}" class="card-btn">
+                    <a href="{{ route('dati_orto') }}" class="card-btn">
                         Torna alle piante
                     </a>
 
@@ -202,7 +202,7 @@
                                     Salva pianta
                                 </button>
 
-                                <a href="{{ route('users') }}" class="btn btn-secondary" style="width:auto;">
+                                <a href="{{ route('dati_orto') }}" class="btn btn-secondary" style="width:auto;">
                                     Annulla
                                 </a>
                             </div>

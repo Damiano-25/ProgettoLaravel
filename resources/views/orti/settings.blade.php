@@ -32,7 +32,7 @@ https://templatemo.com/tm-607-glass-admin
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="logo">G</div>
+                <div class="logo">OW</div>
                 <span class="logo-text">OrtoWare</span>
             </div>
 
@@ -43,7 +43,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- PIANTA -->
                         <li class="nav-item">
-                            <a href="{{ route('index', ['id' => 1]) }}" class="nav-link">
+                            <a href="{{ route('dati_pianta') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- foglia -->
@@ -70,7 +70,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- ISTRUZIONI -->
                         <li class="nav-item">
-                            <a href="{{ route('analytics') }}" class="nav-link">
+                            <a href="{{ route('istruzioni') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- libro / guida -->
@@ -83,7 +83,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- ORTO -->
                         <li class="nav-item">
-                            <a href="{{ route('users') }}" class="nav-link">
+                            <a href="{{ route('dati_orto') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- piantine multiple -->

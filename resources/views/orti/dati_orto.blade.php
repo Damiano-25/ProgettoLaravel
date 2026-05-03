@@ -43,7 +43,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- PIANTA -->
                         <li class="nav-item">
-                            <a href="{{ route('index', ['id' => 1]) }}" class="nav-link">
+                            <a href="{{ route('dati_pianta') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- foglia -->
@@ -70,7 +70,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- ISTRUZIONI -->
                         <li class="nav-item">
-                            <a href="{{ route('analytics') }}" class="nav-link">
+                            <a href="{{ route('istruzioni') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- libro / guida -->
@@ -83,7 +83,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- ORTO -->
                         <li class="nav-item">
-                            <a href="{{ route('users') }}" class="nav-link">
+                            <a href="{{ route('dati_orto') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- piantine multiple -->
@@ -237,20 +237,20 @@ https://templatemo.com/tm-607-glass-admin
 
                                     <td>
                                         <?php
-                                        $status = 'Good';
-                                        
-                                        if ($row->UMIDITA_RADICI_PERC < 60) {
-                                            $status = 'Low';
-                                        } elseif ($row->UMIDITA_RADICI_PERC > 75) {
-                                            $status = 'High';
-                                        }
-                                        
-                                        $class = 'completed';
-                                        if ($status == 'Low') {
-                                            $class = 'pending';
-                                        }
-                                        if ($status == 'High') {
+                                        if ($row->UMIDITA_RADICI_PERC === null) {
+                                            $status = 'N/A';
                                             $class = 'processing';
+                                        } else {
+                                            $status = 'Good';
+                                            $class = 'completed';
+                                        
+                                            if ($row->UMIDITA_RADICI_PERC < 60) {
+                                                $status = 'Low';
+                                                $class = 'pending';
+                                            } elseif ($row->UMIDITA_RADICI_PERC > 75) {
+                                                $status = 'High';
+                                                $class = 'processing';
+                                            }
                                         }
                                         ?>
 
@@ -270,7 +270,7 @@ https://templatemo.com/tm-607-glass-admin
                                     <td>
                                         <div
                                             style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;">
-                                            <a href="{{ route('index', ['id' => $row->ID_PIANTA]) }}"
+                                            <a href="{{ route('dati_pianta', ['id' => $row->ID_PIANTA]) }}"
                                                 class="card-btn" style="padding: 6px 12px;">
                                                 View
                                             </a>

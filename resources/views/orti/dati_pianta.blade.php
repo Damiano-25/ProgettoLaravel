@@ -36,14 +36,15 @@ https://templatemo.com/tm-607-glass-admin
                 <span class="logo-text">OrtoWare</span>
             </div>
 
-                        <ul class="nav-menu">
+            <ul class="nav-menu">
                 <li class="nav-section">
                     <span class="nav-section-title">Main Menu</span>
                     <ul>
 
                         <!-- PIANTA -->
                         <li class="nav-item">
-                            <a href="{{ route('index', ['id' => 1]) }}" class="nav-link">
+                            <a href="{{ route('dati_pianta') }}"
+                                class="nav-link {{ request()->routeIs('dati_pianta') ? 'active' : '' }}">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- foglia -->
@@ -70,7 +71,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- ISTRUZIONI -->
                         <li class="nav-item">
-                            <a href="{{ route('analytics') }}" class="nav-link">
+                            <a href="{{ route('istruzioni') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- libro / guida -->
@@ -83,7 +84,7 @@ https://templatemo.com/tm-607-glass-admin
 
                         <!-- ORTO -->
                         <li class="nav-item">
-                            <a href="{{ route('users') }}" class="nav-link">
+                            <a href="{{ route('dati_orto') }}" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <!-- piantine multiple -->
@@ -110,23 +111,23 @@ https://templatemo.com/tm-607-glass-admin
                             </a>
                         </li>
 
-                                        <li class="nav-section">
-                    <span class="nav-section-title">Account</span>
-                    <ul>
-                        <li class="nav-item">
-                            <a href="{{ route('login') }}" class="nav-link">
-                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                    <polyline points="16 17 21 12 16 7" />
-                                    <line x1="21" y1="12" x2="9" y2="12" />
-                                </svg>
-                                Logout
-                            </a>
+                        <li class="nav-section">
+                            <span class="nav-section-title">Account</span>
+                            <ul>
+                                <li class="nav-item">
+                                    <a href="{{ route('login') }}" class="nav-link">
+                                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                            <polyline points="16 17 21 12 16 7" />
+                                            <line x1="21" y1="12" x2="9" y2="12" />
+                                        </svg>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
-                </li>
-            </ul>
 
                     <div class="sidebar-footer">
                         <div class="user-profile">
@@ -158,7 +159,8 @@ https://templatemo.com/tm-607-glass-admin
                     @endif
 
                     <button class="nav-btn" id="theme-toggle" title="Toggle Light/Dark Mode">
-                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <circle cx="12" cy="12" r="4" />
                             <path d="M12 2v2" />
                             <path d="M12 20v2" />
@@ -169,116 +171,136 @@ https://templatemo.com/tm-607-glass-admin
                             <path d="M6.34 17.66l-1.41 1.41" />
                             <path d="M19.07 4.93l-1.41 1.41" />
                         </svg>
-                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            style="display: none;">
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" style="display: none;">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                         </svg>
                     </button>
                 </div>
             </nav>
 
-            <!-- Stats Cards -->
-            <section class="stats-grid">
+            @if (!$pianta)
+                <section class="settings-grid" style="display:block;">
+                    <div class="glass-card"
+                        style="max-width: 700px; margin: 40px auto; text-align: center; padding: 35px;">
+                        <h2 style="margin-bottom: 15px;">Nessuna pianta disponibile</h2>
 
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Temperatura</h3>
-                            <div class="stat-value">{{ $dati->temperatura ?? 'Nessun dato' }} °C</div>
-                        </div>
+                        <p style="line-height: 1.7; margin-bottom: 25px;">
+                            Non hai selezionato nessuna pianta dal tuo orto.
+                            Aggiungi una pianta per visualizzare i dati rilevati dai sensori e gestire il programma di
+                            irrigazione.
+                        </p>
+
+                        <a href="{{ route('piante.create') }}" class="card-btn" style="padding: 10px 18px;">
+                            Aggiungi pianta
+                        </a>
                     </div>
-                </div>
+                </section>
+            @else
+                <!-- Stats Cards -->
+                <section class="stats-grid">
 
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Umidità aria</h3>
-                            <div class="stat-value">{{ $dati->umidita_aria ?? 'Nessun dato' }} %</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Umidità suolo</h3>
-                            <div class="stat-value">{{ $dati->suolo ?? 'Nessun dato' }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Acqua</h3>
-                            <div class="stat-value">{{ $dati->acqua ?? 'Nessun dato' }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Relè</h3>
-                            <div class="stat-value">
-                                {{ isset($dati->rele) ? ($dati->rele ? 'ACCESO' : 'SPENTO') : 'Nessun dato' }}
+                    <div class="glass-card glass-card-3d stat-card">
+                        <div class="stat-card-inner">
+                            <div class="stat-info">
+                                <h3>Temperatura</h3>
+                                <div class="stat-value">{{ $dati->temperatura ?? 'Nessun dato' }} °C</div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="glass-card glass-card-3d stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-info">
-                            <h3>Programma irrigazione</h3>
+                    <div class="glass-card glass-card-3d stat-card">
+                        <div class="stat-card-inner">
+                            <div class="stat-info">
+                                <h3>Umidità aria</h3>
+                                <div class="stat-value">{{ $dati->umidita_aria ?? 'Nessun dato' }} %</div>
+                            </div>
+                        </div>
+                    </div>
 
-                            @if ($pianta && $pianta->attiva)
-                                <!-- Stato attivo -->
-                                <button type="button" class="card-btn btn-irrigazione attivo" disabled>
-                                    Programma già attivo
-                                </button>
+                    <div class="glass-card glass-card-3d stat-card">
+                        <div class="stat-card-inner">
+                            <div class="stat-info">
+                                <h3>Umidità suolo</h3>
+                                <div class="stat-value">{{ $dati->suolo ?? 'Nessun dato' }}</div>
+                            </div>
+                        </div>
+                    </div>
 
-                                <!-- Bottone rimuovi -->
-                                <form method="POST" action="{{ route('piante.disattiva', ['id' => $pianta->id]) }}">
-                                    @csrf
+                    <div class="glass-card glass-card-3d stat-card">
+                        <div class="stat-card-inner">
+                            <div class="stat-info">
+                                <h3>Acqua</h3>
+                                <div class="stat-value">{{ $dati->acqua ?? 'Nessun dato' }}</div>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <button type="submit" class="card-btn btn-irrigazione rimuovi">
-                                        Rimuovi programma
+                    <div class="glass-card glass-card-3d stat-card">
+                        <div class="stat-card-inner">
+                            <div class="stat-info">
+                                <h3>Relè</h3>
+                                <div class="stat-value">
+                                    {{ isset($dati->rele) ? ($dati->rele ? 'ACCESO' : 'SPENTO') : 'Nessun dato' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card glass-card-3d stat-card">
+                        <div class="stat-card-inner">
+                            <div class="stat-info">
+                                <h3>Programma irrigazione</h3>
+
+                                @if ($pianta && $pianta->attiva)
+                                    <!-- Stato attivo -->
+                                    <button type="button" class="card-btn btn-irrigazione attivo" disabled>
+                                        Programma già attivo
                                     </button>
-                                </form>
-                            @else
-                                <!-- Bottone attiva -->
-                                @if ($pianta)
+
+                                    <!-- Bottone rimuovi -->
                                     <form method="POST"
-                                        action="{{ route('piante.attiva', ['id' => $pianta->id]) }}">
+                                        action="{{ route('piante.disattiva', ['id' => $pianta->id]) }}">
                                         @csrf
 
-                                        <button type="submit" class="card-btn btn-irrigazione non-attivo">
-                                            Attiva programma per questa pianta
+                                        <button type="submit" class="card-btn btn-irrigazione rimuovi">
+                                            Rimuovi programma
                                         </button>
                                     </form>
                                 @else
-                                    <p>Nessuna pianta disponibile. Aggiungi una pianta dal tuo orto.</p>
-                                @endif
-                            @endif
+                                    <!-- Bottone attiva -->
+                                    @if ($pianta)
+                                        <form method="POST"
+                                            action="{{ route('piante.attiva', ['id' => $pianta->id]) }}">
+                                            @csrf
 
+                                            <button type="submit" class="card-btn btn-irrigazione non-attivo">
+                                                Attiva programma per questa pianta
+                                            </button>
+                                        </form>
+                                    @else
+                                        <p>Nessuna pianta disponibile. Aggiungi una pianta dal tuo orto.</p>
+                                    @endif
+                                @endif
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </section>
+                </section>
+                @endif
 
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-            </button>
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
 
-            <script src="{{ asset('template/templatemo-glass-admin-script.js') }}"></script>
-            <!-- TemplateMo 607 Glass Admin -->
+                <script src="{{ asset('template/templatemo-glass-admin-script.js') }}"></script>
+                <!-- TemplateMo 607 Glass Admin -->
 </body>
 
 </html>
