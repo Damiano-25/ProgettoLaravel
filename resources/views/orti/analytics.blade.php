@@ -148,104 +148,115 @@
             </nav>
 
             <section class="settings-grid" style="display:block;">
-                <div class="glass-card" style="max-width: 950px; margin: 0 auto;">
-                    <div class="settings-section">
-                        <h3 class="settings-section-title">Chi siamo</h3>
-                        <p style="line-height: 1.7;">
-                            <strong>OrtoWare</strong> è una web app collegata a un sistema di irrigazione automatico
-                            realizzato con Arduino. L’obiettivo è monitorare le piante dell’orto tramite sensori e
-                            gestire l’irrigazione in modo automatico in base alla categoria della pianta selezionata.
-                        </p>
-                    </div>
+    <div class="glass-card" style="max-width: 950px; margin: 0 auto;">
 
-                    <div class="settings-section">
-                        <h3 class="settings-section-title">Come usare l’app</h3>
+        <!-- Chi siamo -->
+        <div class="settings-section">
+            <h3 class="settings-section-title">Chi siamo</h3>
+            <p style="line-height: 1.7;">
+                <strong>OrtoWare</strong> è un progetto che integra hardware e software per la gestione intelligente dell’irrigazione.
+                Il sistema è basato su Arduino ed è collegato a una web app chiamata <strong>OrtoWare</strong>, che permette di monitorare e controllare le piante dell’orto.
+                <br><br>
+                L’obiettivo è ottimizzare l’uso dell’acqua, adattando l’irrigazione alle reali condizioni del terreno e alle esigenze delle diverse tipologie di piante.
+            </p>
+        </div>
 
-                        <div class="settings-row">
-                            <div class="settings-label">
-                                <span class="settings-label-title">1. Aggiungi le piante</span>
-                                <span class="settings-label-desc">
-                                    Vai nella sezione Users e premi “Aggiungi Pianta”. Inserisci il nome, l’orto e la
-                                    categoria.
-                                </span>
-                            </div>
-                        </div>
+        <!-- Come usare l'app -->
+        <div class="settings-section">
+            <h3 class="settings-section-title">Come usare l’app</h3>
 
-                        <div class="settings-row">
-                            <div class="settings-label">
-                                <span class="settings-label-title">2. Visualizza una pianta</span>
-                                <span class="settings-label-desc">
-                                    Premi “View” per aprire la dashboard della pianta e vedere temperatura, umidità
-                                    aria,
-                                    umidità del suolo, acqua e stato del relè.
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="settings-row">
-                            <div class="settings-label">
-                                <span class="settings-label-title">3. Attiva il programma di irrigazione</span>
-                                <span class="settings-label-desc">
-                                    Dalla pagina della pianta puoi attivare il programma. Il sistema usa la categoria
-                                    collegata
-                                    alla pianta per scegliere soglia del suolo, durata e intervallo di irrigazione.
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="settings-row">
-                            <div class="settings-label">
-                                <span class="settings-label-title">4. Un programma alla volta</span>
-                                <span class="settings-label-desc">
-                                    Se attivi il programma su una nuova pianta, quello precedente viene disattivato
-                                    automaticamente.
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="settings-section">
-                        <h3 class="settings-section-title">Come funziona l’irrigatore automatico</h3>
-                        <p style="line-height: 1.7;">
-                            Arduino legge i valori dei sensori, riceve da Laravel la configurazione della pianta attiva
-                            e decide se avviare la pompa. Quando invia i dati alla web app, manda anche l’id della
-                            pianta,
-                            così ogni rilevazione viene salvata nella tabella corretta.
-                        </p>
-
-                        <div class="settings-row">
-                            <div class="settings-label">
-                                <span class="settings-label-title">Sensori usati</span>
-                                <span class="settings-label-desc">
-                                    DHT11 per temperatura e umidità aria, sensore di umidità del suolo, sensore livello
-                                    acqua,
-                                    relè per controllare la pompa.
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="settings-row">
-                            <div class="settings-label">
-                                <span class="settings-label-title">Dati salvati</span>
-                                <span class="settings-label-desc">
-                                    temperatura, umidità aria, valore del suolo, valore dell’acqua, stato del relè e
-                                    data della rilevazione.
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="btn-group">
-                        <a href="{{ route('users') }}" class="btn btn-primary" style="width:auto;">
-                            Vai alle piante
-                        </a>
-
-                        <a href="{{ route('meteo') }}" class="btn btn-secondary" style="width:auto;">
-                            Vai al meteo
-                        </a>
-                    </div>
+            <div class="settings-row">
+                <div class="settings-label">
+                    <span class="settings-label-title">1. Aggiungi le piante</span>
+                    <span class="settings-label-desc">
+                        Accedi alla sezione Users e seleziona “Aggiungi Pianta”. Inserisci nome, orto e categoria.
+                    </span>
                 </div>
-            </section>
+            </div>
+
+            <div class="settings-row">
+                <div class="settings-label">
+                    <span class="settings-label-title">2. Visualizza i dati</span>
+                    <span class="settings-label-desc">
+                        Premi “View” per accedere alla dashboard della pianta e visualizzare:
+                        temperatura, umidità dell’aria, umidità del suolo, livello dell’acqua e stato del relè.
+                    </span>
+                </div>
+            </div>
+
+            <div class="settings-row">
+                <div class="settings-label">
+                    <span class="settings-label-title">3. Attiva il programma di irrigazione</span>
+                    <span class="settings-label-desc">
+                        Dalla pagina della pianta puoi attivare il programma automatico. Il sistema utilizza la categoria selezionata per determinare soglia di umidità, durata e frequenza.
+                    </span>
+                </div>
+            </div>
+
+            <div class="settings-row">
+                <div class="settings-label">
+                    <span class="settings-label-title">4. Gestione automatica</span>
+                    <span class="settings-label-desc">
+                        È possibile attivare un solo programma alla volta: l’attivazione di una nuova pianta disattiva automaticamente quella precedente.
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Come funziona -->
+        <div class="settings-section">
+            <h3 class="settings-section-title">Come funziona l’irrigatore automatico</h3>
+
+            <p style="line-height: 1.7;">
+                Il sistema è composto da:
+                <br>• sensore di umidità del suolo
+                <br>• sensore DHT11 (temperatura e umidità aria)
+                <br>• sensore livello acqua
+                <br>• relè
+                <br>• pompa
+                <br><br>
+                Arduino legge i dati dei sensori e riceve dalla piattaforma OrtoWare la configurazione della pianta attiva.
+                Il funzionamento si basa su una logica decisionale:
+            </p>
+
+
+
+            <p style="line-height: 1.7;">
+                Quando il terreno è secco, Arduino attiva il relè che accende la pompa, irrigando automaticamente la pianta.
+                Ogni rilevazione viene inviata alla web app insieme all’ID della pianta e salvata nel database, permettendo il monitoraggio nel tempo.
+            </p>
+        </div>
+
+        <!-- Scelte ecologiche -->
+        <div class="settings-section">
+            <h3 class="settings-section-title">Scelte ecologiche</h3>
+
+            <p style="line-height: 1.7;">
+                Il progetto integra il concetto di ecosistema dell’orto, andando oltre la semplice irrigazione.
+                <br><br>
+                Sono state considerate piante da fiore utili come:
+                <br>• rose, che permettono di individuare precocemente la presenza di parassiti
+                <br>• lavanda, che attira insetti utili e contribuisce all’equilibrio naturale
+                <br><br>
+                L’irrigazione intelligente riduce gli sprechi d’acqua, mentre l’integrazione tra piante e ambiente favorisce una gestione sostenibile dell’orto.
+                <br><br>
+                Questo approccio dimostra come tecnologia e natura possano collaborare per creare un sistema efficiente, automatico e rispettoso dell’ambiente.
+            </p>
+        </div>
+
+        <!-- Bottoni -->
+        <div class="btn-group">
+            <a href="{{ route('users') }}" class="btn btn-primary" style="width:auto;">
+                Vai alle piante
+            </a>
+
+            <a href="{{ route('meteo') }}" class="btn btn-secondary" style="width:auto;">
+                Vai al meteo
+            </a>
+        </div>
+
+    </div>
+</section>
         </main>
     </div>
 

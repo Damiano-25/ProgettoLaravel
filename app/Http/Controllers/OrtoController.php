@@ -43,45 +43,45 @@ class OrtoController extends Controller
     }
 
     public function users()
-{
-    $sub = DB::table('dati')
-        ->selectRaw('MAX(id) as id')
-        ->groupBy('pianta_id');
+    {
+        $sub = DB::table('dati')
+            ->selectRaw('MAX(id) as id')
+            ->groupBy('pianta_id');
 
-    $dati2 = DB::table('piante')
-        ->join('orti', 'piante.orto_id', '=', 'orti.id')
-        ->join('categorie_piante', 'piante.categoria_id', '=', 'categorie_piante.id')
-        ->leftJoin('dati', function ($join) use ($sub) {
-            $join->on('piante.id', '=', 'dati.pianta_id')
-                ->whereIn('dati.id', $sub);
-        })
-        ->where('orti.utente_id', session('utente_id')) // QUI
-        ->select(
-            'piante.id as ID_PIANTA',
-            'piante.nome as NOME_PIANTA',
-            'orti.provincia as PROVINCIA_ORTO',
-            'dati.data_rilevazione as DATA_RECORD',
-            'dati.suolo as UMIDITA_RADICI_PERC'
-        )
-        ->get();
+        $dati2 = DB::table('piante')
+            ->join('orti', 'piante.orto_id', '=', 'orti.id')
+            ->join('categorie_piante', 'piante.categoria_id', '=', 'categorie_piante.id')
+            ->leftJoin('dati', function ($join) use ($sub) {
+                $join->on('piante.id', '=', 'dati.pianta_id')
+                    ->whereIn('dati.id', $sub);
+            })
+            ->where('orti.utente_id', session('utente_id'))
+            ->select(
+                'piante.id as ID_PIANTA',
+                'piante.nome as NOME_PIANTA',
+                'orti.provincia as PROVINCIA_ORTO',
+                DB::raw('COALESCE(dati.data_rilevazione, piante.created_at) as DATA_RECORD'),
+                'dati.suolo as UMIDITA_RADICI_PERC'
+            )
+            ->get();
 
-    $dati = DB::table('dati')
-        ->join('piante', 'dati.pianta_id', '=', 'piante.id')
-        ->join('orti', 'piante.orto_id', '=', 'orti.id')
-        ->where('orti.utente_id', session('utente_id'))
-        ->orderByDesc('dati.id')
-        ->select('dati.*')
-        ->first();
+        $dati = DB::table('dati')
+            ->join('piante', 'dati.pianta_id', '=', 'piante.id')
+            ->join('orti', 'piante.orto_id', '=', 'orti.id')
+            ->where('orti.utente_id', session('utente_id'))
+            ->orderByDesc('dati.id')
+            ->select('dati.*')
+            ->first();
 
-    $nomePianta = $dati2->first()->NOME_PIANTA ?? 'Nessuna pianta';
+        $nomePianta = $dati2->first()->NOME_PIANTA ?? 'Nessuna pianta';
 
-    $nPiante = DB::table('piante')
-        ->join('orti', 'piante.orto_id', '=', 'orti.id')
-        ->where('orti.utente_id', session('utente_id'))
-        ->count();
+        $nPiante = DB::table('piante')
+            ->join('orti', 'piante.orto_id', '=', 'orti.id')
+            ->where('orti.utente_id', session('utente_id'))
+            ->count();
 
-    return view('orti.users', compact('dati', 'nomePianta', 'nPiante', 'dati2'));
-}
+        return view('orti.users', compact('dati', 'nomePianta', 'nPiante', 'dati2'));
+    }
 
     public function create()
     {

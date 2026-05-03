@@ -52,7 +52,7 @@ CREATE TABLE piante (
     attiva TINYINT(1) DEFAULT 0,
     orto_id INT NOT NULL,
     categoria_id INT NOT NULL,
-    tipologia_id INT NULL,
+
     created_at TIMESTAMP NULL DEFAULT NULL,
     updated_at TIMESTAMP NULL DEFAULT NULL,
 
@@ -62,10 +62,6 @@ CREATE TABLE piante (
 
     FOREIGN KEY (categoria_id) REFERENCES categorie_piante(id)
         ON DELETE RESTRICT
-        ON UPDATE CASCADE,
-
-    FOREIGN KEY (tipologia_id) REFERENCES tipologie_pianta(id)
-        ON DELETE SET NULL
         ON UPDATE CASCADE
 );
 

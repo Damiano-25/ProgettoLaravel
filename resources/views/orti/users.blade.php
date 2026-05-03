@@ -110,35 +110,35 @@ https://templatemo.com/tm-607-glass-admin
                             </a>
                         </li>
 
-                                        <li class="nav-section">
-                    <span class="nav-section-title">Account</span>
-                    <ul>
-                        <li class="nav-item">
-                            <a href="{{ route('login') }}" class="nav-link">
-                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                    <polyline points="16 17 21 12 16 7" />
-                                    <line x1="21" y1="12" x2="9" y2="12" />
-                                </svg>
-                                Logout
-                            </a>
+                        <li class="nav-section">
+                            <span class="nav-section-title">Account</span>
+                            <ul>
+                                <li class="nav-item">
+                                    <a href="{{ route('login') }}" class="nav-link">
+                                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                            <polyline points="16 17 21 12 16 7" />
+                                            <line x1="21" y1="12" x2="9" y2="12" />
+                                        </svg>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
-                </li>
-            </ul>
 
-            <div class="sidebar-footer">
-                <div class="user-profile">
-                    <div class="user-avatar">{{ strtoupper(substr(session('utente_nome'), 0, 2)) }}</div>
-                    <div class="user-info">
-                        <div class="user-name">
-                            {{ session('utente_nome') }}
+                    <div class="sidebar-footer">
+                        <div class="user-profile">
+                            <div class="user-avatar">{{ strtoupper(substr(session('utente_nome'), 0, 2)) }}</div>
+                            <div class="user-info">
+                                <div class="user-name">
+                                    {{ session('utente_nome') }}
+                                </div>
+                                <div class="user-role">Utente</div>
+                            </div>
                         </div>
-                        <div class="user-role">Utente</div>
                     </div>
-                </div>
-            </div>
         </aside>
 
         <!-- Main Content -->
@@ -188,6 +188,7 @@ https://templatemo.com/tm-607-glass-admin
                         <div>
                             <h2 class="card-title">Le tue piante</h2>
                             <p class="card-subtitle">Clicca su view per visualizzare pianta</p>
+                            <p class="card-subtitle">Clicca su rimuovi per rimuovere pianta</p>
                         </div>
                         <div class="card-actions">
                             <a href="{{ route('piante.create') }}" class="card-btn btn-irrigazione non-attivo">
@@ -259,7 +260,7 @@ https://templatemo.com/tm-607-glass-admin
                                     </td>
 
                                     <td>
-                                        <?php echo $row->DATA_RECORD ?? 'N/A'; ?>
+                                        {{ $row->DATA_RECORD ?? 'N/A' }}
                                     </td>
 
                                     <td>
@@ -267,8 +268,8 @@ https://templatemo.com/tm-607-glass-admin
                                     </td>
 
                                     <td>
-                                    <td>
-                                        <div style="display: flex; gap: 10px; align-items: center;">
+                                        <div
+                                            style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;">
                                             <a href="{{ route('index', ['id' => $row->ID_PIANTA]) }}"
                                                 class="card-btn" style="padding: 6px 12px;">
                                                 View
@@ -287,7 +288,7 @@ https://templatemo.com/tm-607-glass-admin
                                             </form>
                                         </div>
                                     </td>
-                                    </td>
+
                                 </tr>
 
                                 <?php endforeach; ?>
