@@ -9,16 +9,16 @@ class ConfigurazionePiantaController extends Controller
 {
     public function show()
     {
-        // Trova la pianta attiva
+        //trova la pianta attiva
         $pianta = DB::table('piante')
             ->where('attiva', 1)
-            ->first();
+            ->first(); //prende solo primo risultato da query
 
         if (!$pianta) {
             return response()->json([]);
         }
 
-        // Recupera categoria
+        //recupera categoria
         $categoria = DB::table('categorie_piante')
             ->where('id', $pianta->categoria_id)
             ->first();
@@ -29,7 +29,7 @@ class ConfigurazionePiantaController extends Controller
             ], 404);
         }
 
-        // Configurazione per Arduino
+        //configurazione per Arduino
         return response()->json([
             'pianta_id' => $pianta->id,
             'soglia_suolo' => $categoria->soglia_suolo,

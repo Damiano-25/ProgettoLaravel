@@ -39,13 +39,6 @@ CREATE TABLE categorie_piante (
     updated_at TIMESTAMP NULL DEFAULT NULL
 );
 
-CREATE TABLE tipologie_pianta (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome_pianta VARCHAR(50) NOT NULL,
-    umidita_ideale_perc INT NULL,
-    esposizione_solare_ideale INT NULL
-);
-
 CREATE TABLE piante (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
